@@ -1,0 +1,10 @@
+.contact {
+  width: 100%;
+  margin: 12px 0;
+  padding: 10px;
+  border: 1px solid #0a0a0a70;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
