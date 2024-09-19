@@ -8,7 +8,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   color: #fafafa;
-  background-color: #0c0c0c;
+  background-image: linear-gradient(to bottom, #0c0c0c, #fafafa);
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;

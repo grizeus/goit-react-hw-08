@@ -1,12 +1,17 @@
 // import css from './App.module.css'
+import ContactForm from '../ContactForm/ContactForm';
+import ContactList from '../ContactList/ContactList';
+import SearchBox from '../SearchBox/SearchBox';
 
 function App() {
-
   return (
-    <>
-    <h1>Hello World</h1>
-    </>
-  )
+    <div>
+      <h1>Phonebook</h1>
+      <ContactForm />
+      <SearchBox />
+      <ContactList />
+    </div>
+  );
 }
 
-export default App
+export default App;
