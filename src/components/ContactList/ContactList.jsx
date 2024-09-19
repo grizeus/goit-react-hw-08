@@ -3,16 +3,17 @@ import Contact from "../Contact/Contact";
 
 const ContactList = ({ contacts, handleDelete }) => {
   return (
-    <div className={css.contactList}>
-      {contacts.map((contact) => (
+    <ul className={css.contactList}>
+      {contacts.map(({id, name, number}) => (
         <Contact
-          key={contact.id}
-          name={contact.name}
-          phone={contact.number}
+          key={id}
+          id={id}
+          name={name}
+          phone={number}
           handleDelete={handleDelete}
         />
       ))}
-    </div>
+    </ul>
   );
 };
 
