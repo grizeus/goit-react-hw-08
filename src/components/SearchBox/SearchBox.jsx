@@ -1,9 +1,13 @@
+import { useId } from "react";
+
 const SearchBox = ({ value, onFilter }) => {
+  const searchID = useId();
   return (
     <div>
-      <label htmlFor="search">
+      <label htmlFor={searchID}>
         Search
         <input
+          id={searchID}
           type="text"
           name="search"
           value={value}
