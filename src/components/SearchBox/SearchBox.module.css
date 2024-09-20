@@ -20,3 +20,9 @@
     width: 320px;
   }
 }
+
+.search-input:focus,
+.search-input:hover {
+  outline: none;
+  background-color: #ccc;
+}
