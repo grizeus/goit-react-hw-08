@@ -5,7 +5,7 @@ const Contact = ({ id, name, phone, handleDelete }) => {
     <div className={css.contact}>
       <h2>{name}</h2>
       <p>{phone}</p>
-      <button onClick={() => handleDelete(id)}>Delete</button>
+      <button className={css["contact-btn"]} onClick={() => handleDelete(id)}>Delete</button>
     </div>
   );
 };

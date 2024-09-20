@@ -37,7 +37,6 @@ function App() {
 
   return (
     <div>
-      <h1>Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox value={search} onFilter={setSearch} />
       <ContactList contacts={filteredContacts} handleDelete={deleteContact} />

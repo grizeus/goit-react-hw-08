@@ -1,6 +1,5 @@
-.contactList {
-  width: 200px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+.contact-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, max(200px));
+  gap: 5px 40px;
 }

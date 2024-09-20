@@ -1,4 +1,5 @@
 .contact {
+  color: #262626;
   width: 100%;
   margin: 12px 0;
   padding: 10px;
@@ -7,4 +8,19 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+}
+
+.contact-btn {
+  font: inherit;
+  font-weight: 400;
+  font-size: 18px;
+  padding: 8px;
+  letter-spacing: -0.02em;
+  line-height: 130%;
+  transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
+}
+
+.contact-btn:hover {
+  color: #fafafa;
+  background-color: #ff1111c0;
 }
