@@ -20,7 +20,20 @@
   transition: background-color 250ms ease-in-out, color 250ms ease-in-out;
 }
 
+.contact-content {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+}
+
 .contact-btn:hover {
   color: #fafafa;
   background-color: #ff1111c0;
+}
+
+.icon {
+  fill: #262626;
+  width: 18px;
+  height: 18px;
 }
