@@ -1,3 +1,3 @@
 # React + Vite
 
-Third homework for the GOIT React course.
+Sixth homework for the GOIT React course (Redux + Redux Toolkit).

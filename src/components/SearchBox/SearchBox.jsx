@@ -1,8 +1,18 @@
 import { useId } from "react";
+import { useSelector, useDispatch } from "react-redux";
+
+import { selectNameFilter, changeFilter } from "../../redux/filtersSlice";
 import css from "./SearchBox.module.css";
 
-const SearchBox = ({ value, onFilter }) => {
+const SearchBox = () => {
   const searchID = useId();
+  const value = useSelector(state => selectNameFilter(state));
+  const dispatch = useDispatch();
+  const handleChange = e => {
+    const loweredValue = e.target.value.toLocaleLowerCase();
+    dispatch(changeFilter(loweredValue));
+  };
+
   return (
     <section title="Search box">
       <div className={css.wrapper}>
@@ -13,7 +23,7 @@ const SearchBox = ({ value, onFilter }) => {
           type="text"
           name="search"
           value={value}
-          onChange={e => onFilter(e.target.value)}
+          onChange={handleChange}
         />
       </div>
     </section>

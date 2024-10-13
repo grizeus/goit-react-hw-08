@@ -1,7 +1,11 @@
-import css from "./ContactForm.module.css";
 import { useId } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice";
+
+import css from "./ContactForm.module.css";
 
 const initialContact = {
   name: "",
@@ -19,16 +23,17 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const ContactForm = ({ onAdd }) => {
+const ContactForm = () => {
   const nameID = useId();
   const numberID = useId();
+  const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    onAdd({
+    dispatch(addContact({
       // trick to generate unique id
-      id: (Date.now() + (Math.random().toFixed(3) * 1000)),
+      id: Date.now() + Math.random().toFixed(3) * 1000,
       ...values,
-    });
+    }));
     actions.resetForm();
   };
 

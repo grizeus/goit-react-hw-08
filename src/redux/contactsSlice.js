@@ -3,7 +3,7 @@ import INITIAL_STATE from "../data/contacts.json";
 
 const contactsSlice = createSlice({
   name: "contacts",
-  initialState: INITIAL_STATE,
+  initialState: { items: INITIAL_STATE },
   reducers: {
     addContact: (state, action) => {
       state.items.push(action.payload);
@@ -11,13 +11,11 @@ const contactsSlice = createSlice({
     deleteContact: (state, action) => {
       state.items = state.items.filter(item => item.id !== action.payload);
     },
-    selectContacts: state => {
-      return state.items;
-    },
   },
 });
 
-export const { addContact, deleteContact, selectContacts } =
+export const selectContacts = state => state.contacts.items;
+export const { addContact, deleteContact } =
   contactsSlice.actions;
 
 export default contactsSlice.reducer;
