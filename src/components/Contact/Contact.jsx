@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { MdPerson, MdPhone } from "react-icons/md";
 
-import { deleteContact } from "../../redux/contactsSlice";
+import { deleteContact } from "../../redux/contactsOps";
 import css from "./Contact.module.css";
 
 const Contact = ({ id, name, phone }) => {
