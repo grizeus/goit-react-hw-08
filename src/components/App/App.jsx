@@ -7,8 +7,8 @@ import SearchBox from "../SearchBox/SearchBox";
 import Loader from "../Loader/Loader";
 import Error from "../Error/Error";
 
-import { fetchContacts } from "../../redux/contactsOps";
-import { selectError, selectIsLoading } from "../../redux/selectors";
+import { fetchContacts } from "../../redux/contacts/operations";
+import { selectError, selectIsLoading } from "../../redux/contacts/selectors";
 
 function App() {
   const isLoading = useSelector(selectIsLoading);
