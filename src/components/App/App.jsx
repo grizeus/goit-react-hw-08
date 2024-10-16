@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, lazy } from "react";
+import { Route, Routes } from "react-router-dom";
 
 import ContactForm from "../ContactForm/ContactForm";
 import ContactList from "../ContactList/ContactList";
