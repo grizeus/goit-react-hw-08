@@ -1,32 +1,34 @@
+import { lazy, Suspense, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 
-import ContactForm from "../ContactForm/ContactForm";
-import ContactList from "../ContactList/ContactList";
-import SearchBox from "../SearchBox/SearchBox";
-import Loader from "../Loader/Loader";
-import Error from "../Error/Error";
-
-import { fetchContacts } from "../../redux/contacts/operations";
-import { selectError, selectIsLoading } from "../../redux/contacts/selectors";
+import Layout from "../../components/Layout/Layout";
+import { refreshUser } from "../../redux/auth/operations";
+import { selectIsrefreshing } from "../../redux/auth/selectors";
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const ContactsPage = lazy(() =>
+  import("../../pages/ContactsPage/ContactsPage")
+);
 
 function App() {
-  const isLoading = useSelector(selectIsLoading);
-  const error = useSelector(selectError);
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsrefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return (
-    <div>
-      <ContactForm />
-      <SearchBox />
-      {isLoading && !error && <Loader />}
-      {error && <Error message={error} />}
-      <ContactList />
-    </div>
+  return isRefreshing ? (
+    <b>Refreshing...</b>
+  ) : (
+    <Layout>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/contacts" element={<ContactsPage />} />
+        </Routes>
+      </Suspense>
+    </Layout>
   );
 }
 
