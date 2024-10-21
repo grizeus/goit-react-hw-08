@@ -1,12 +1,7 @@
-import Layout from "../../components/Layout/Layout";
 import styles from "./NotFoundPage.module.css";
 
 const NotFoundPage = () => {
-  return (
-    <Layout>
-      <h1 className={styles.title}>404 - Page Not Found</h1>
-    </Layout>
-  );
+  return <h1 className={styles.title}>404 - Page Not Found</h1>;
 };
 
 export default NotFoundPage;

@@ -5,9 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
 import { refreshUser } from "../../redux/auth/operations";
 import { selectIsrefreshing } from "../../redux/auth/selectors";
+import { RestrictedRoute } from "../../routes/RestrictedRoute";
+import RegistrationPage from "../../pages/RegistrationPage/RegistrationPage";
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const ContactsPage = lazy(() =>
   import("../../pages/ContactsPage/ContactsPage")
+);
+const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
+const NotFoundPage = lazy(() =>
+  import("../../pages/NotFoundPage/NotFoundPage")
 );
 
 function App() {
@@ -25,7 +31,26 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route
+            path="/registration"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<RegistrationPage />}
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute
+                redirectTo="/contacts"
+                component={<LoginPage />}
+              />
+            }
+          />
           <Route path="/contacts" element={<ContactsPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </Layout>

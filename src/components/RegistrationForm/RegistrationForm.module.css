@@ -1,0 +1,46 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.input {
+  min-width: 180px;
+  width: 100%;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 7px rgba(255, 255, 255, 0.3);
+  transition: background-color 250ms ease-in-out;
+  @media screen and (min-width: 480px) {
+    width: 320px;
+  }
+}
+
+.input:focus,
+.input:hover {
+  outline: none;
+  background: #ccc;
+}
+
+.error {
+  width: 160px;
+  padding: 4px;
+  border: 0.5px solid #ff1111c0;
+  border-radius: 8px;
+  color: #ff1111c0;
+}
+
+.error::before {
+  content: "⚠️";
+  margin-right: 8px;
+}
+.reg-btn {
+  font: inherit;
+  font-weight: 400;
+  font-size: 18px;
+  padding: 8px;
+  letter-spacing: -0.02em;
+  line-height: 130%;
+  width: 124px;
+}
