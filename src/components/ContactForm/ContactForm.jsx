@@ -46,7 +46,7 @@ const ContactForm = () => {
             className={css.input}
             type="text"
             name="name"
-            placeholder="..."
+            placeholder="Name"
             id={nameID}
           />
           <ErrorMessage className={css.error} name="name" component="span" />
@@ -56,7 +56,7 @@ const ContactForm = () => {
             className={css.input}
             type="text"
             name="number"
-            placeholder="..."
+            placeholder="+38-XXX-XXX-XX-XX"
             id={numberID}
           />
           <ErrorMessage className={css.error} name="number" component="span" />
