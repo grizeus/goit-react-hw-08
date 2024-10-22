@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <section title="home page">
       <h1 className={styles.title}>
-        Welcome {user.name !== null ? user.name : "stranger"} to Home Page
+        Welcome, {user.name !== null ? user.name : "stranger"}!
       </h1>
       {user.name !== null && <ContactForm />}
     </section>
