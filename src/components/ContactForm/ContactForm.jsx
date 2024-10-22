@@ -1,11 +1,10 @@
 import { useId } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { useDispatch } from "react-redux";
 import { addContact } from "../../redux/contacts/operations";
-
-import css from "./ContactForm.module.css";
+import CustomForm from "../CustomForm/CustomForm";
+import styles from "../CustomForm/CustomForm.module.css";
 
 const initialContact = {
   name: "",
@@ -24,48 +23,37 @@ const validationSchema = Yup.object().shape({
 });
 
 const ContactForm = () => {
+  const formID = useId();
   const nameID = useId();
   const numberID = useId();
-  const dispatch = useDispatch();
-
-  const handleSubmit = (values, actions) => {
-    dispatch(addContact(values));
-    actions.resetForm();
-  };
 
   return (
-    <section title="Create contact form">
-      <h1>Phonebook</h1>
-      <Formik
-        initialValues={initialContact}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}>
-        <Form className={css.form}>
-          <label htmlFor={nameID}>Name</label>
-          <Field
-            className={css.input}
-            type="text"
-            name="name"
-            placeholder="Name"
-            id={nameID}
-          />
-          <ErrorMessage className={css.error} name="name" component="span" />
+    <CustomForm
+      onSubmit={addContact}
+      initialValues={initialContact}
+      validationSchema={validationSchema}
+      btnName="Add contact"
+      id={formID}>
+      <label htmlFor={nameID}>Name</label>
+      <Field
+        className={styles.input}
+        type="text"
+        name="name"
+        placeholder="Name"
+        id={nameID}
+      />
+      <ErrorMessage className={styles.error} name="name" component="span" />
 
-          <label htmlFor={numberID}>Phone number</label>
-          <Field
-            className={css.input}
-            type="text"
-            name="number"
-            placeholder="+38-XXX-XXX-XX-XX"
-            id={numberID}
-          />
-          <ErrorMessage className={css.error} name="number" component="span" />
-          <button className={css["contact-btn"]} type="submit">
-            Add contact
-          </button>
-        </Form>
-      </Formik>
-    </section>
+      <label htmlFor={numberID}>Phone number</label>
+      <Field
+        className={styles.input}
+        type="text"
+        name="number"
+        placeholder="+38-XXX-XXX-XX-XX"
+        id={numberID}
+      />
+      <ErrorMessage className={styles.error} name="number" component="span" />
+    </CustomForm>
   );
 };
 

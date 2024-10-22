@@ -1,10 +1,10 @@
-import { useDispatch } from "react-redux";
 import * as Yup from "yup";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field } from "formik";
 import { useId } from "react";
 
 import { register } from "../../redux/auth/operations";
-import styles from "./RegistrationForm.module.css";
+import CustomForm from "../CustomForm/CustomForm";
+import styles from "../CustomForm/CustomForm.module.css";
 
 const initialRegister = {
   name: "",
@@ -25,65 +25,47 @@ const validationSchema = Yup.object().shape({
 });
 
 const RegistrationForm = () => {
+  const formID = useId();
   const nameID = useId();
   const emailID = useId();
   const passwordID = useId();
-  const dispatch = useDispatch();
-
-  const handleSubmit = (values, actions) => {
-    alert(JSON.stringify(values));
-    dispatch(register(values));
-    actions.resetForm();
-  };
 
   return (
-    <Formik
+    <CustomForm
+      onSubmit={register}
       initialValues={initialRegister}
       validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      autoComplete="off">
-      <Form autoComplete="off" className={styles.form}>
-        <label htmlFor={nameID}>Name</label>
-        <Field
-          className={styles.input}
-          type="text"
-          name="name"
-          placeholder="Thomas Anderson"
-          id={nameID}
-        />
-        <ErrorMessage
-          className={styles.error}
-          name="name"
-          component="span"
-        />
+      btnName="Sign up"
+      id={formID}>
+      <label htmlFor={nameID}>Name</label>
+      <Field
+        className={styles.input}
+        type="text"
+        name="name"
+        placeholder="Thomas Anderson"
+        id={nameID}
+      />
+      <ErrorMessage className={styles.error} name="name" component="span" />
 
-        <label htmlFor={emailID}>Email</label>
-        <Field
-          className={styles.input}
-          type="email"
-          name="email"
-          placeholder="example@example.com"
-          id={emailID}
-        />
-        <ErrorMessage className={styles.error} name="email" component="span" />
+      <label htmlFor={emailID}>Email</label>
+      <Field
+        className={styles.input}
+        type="email"
+        name="email"
+        placeholder="example@example.com"
+        id={emailID}
+      />
+      <ErrorMessage className={styles.error} name="email" component="span" />
 
-        <label htmlFor={passwordID}>Password</label>
-        <Field
-          className={styles.input}
-          type="password"
-          name="password"
-          id={passwordID}
-        />
-        <ErrorMessage
-          className={styles.error}
-          name="password"
-          component="span"
-        />
-        <button className={styles["reg-btn"]} type="submit">
-          Sign up
-        </button>
-      </Form>
-    </Formik>
+      <label htmlFor={passwordID}>Password</label>
+      <Field
+        className={styles.input}
+        type="password"
+        name="password"
+        id={passwordID}
+      />
+      <ErrorMessage className={styles.error} name="password" component="span" />
+    </CustomForm>
   );
 };
 

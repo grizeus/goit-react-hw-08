@@ -35,7 +35,8 @@
   content: "⚠️";
   margin-right: 8px;
 }
-.contact-btn {
+
+.btn {
   font: inherit;
   font-weight: 400;
   font-size: 18px;
