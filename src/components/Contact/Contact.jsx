@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { MdPerson, MdPhone } from "react-icons/md";
+import toast from "react-hot-toast";
 
 import { deleteContact } from "../../redux/contacts/operations";
 import css from "./Contact.module.css";
@@ -7,7 +8,13 @@ import css from "./Contact.module.css";
 const Contact = ({ id, name, phone }) => {
   const dispatch = useDispatch();
   const handleDelete = () => {
-    dispatch(deleteContact(id));
+    try {
+      dispatch(deleteContact(id));
+      toast.success("Contact deleted!");
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong!");
+    }
   };
 
   return (

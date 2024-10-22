@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Formik, Form } from "formik";
+import toast from "react-hot-toast";
 
 import styles from "./CustomForm.module.css";
 
@@ -15,10 +16,11 @@ const CustomForm = ({
   const handleSubmit = (values, actions) => {
     try {
       dispatch(onSubmit(values));
+      toast.success("Success!");
+      actions.resetForm();
     } catch (error) {
       console.log(error);
-    } finally {
-      actions.resetForm();
+      toast.error("Something went wrong!");
     }
   };
 
