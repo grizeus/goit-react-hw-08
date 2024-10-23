@@ -1,0 +1,53 @@
+.modal {
+  background-color: #6989a7;
+  border-radius: 8px;
+  padding: 32px;
+  width: 200px;
+  max-width: 100%;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.modal:focus {
+  outline: none;
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.btn {
+  width: 100%;
+  margin: 0;
+  border: none;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.btn:hover,
+.btn:focus {
+  color: #fafafa;
+  background-color: #007bff;
+}
+
+.btn.btn-confirm:hover,
+.btn.btn-confirm:focus {
+  background-color: #ff1111c0;
+}
+
+.btn-block {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 16px;
+}
