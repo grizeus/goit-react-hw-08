@@ -1,11 +1,14 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { MdPerson, MdPhone } from "react-icons/md";
 import toast from "react-hot-toast";
 
+import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import { deleteContact } from "../../redux/contacts/operations";
 import css from "./Contact.module.css";
 
 const Contact = ({ id, name, phone }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const handleDelete = () => {
     try {
@@ -27,9 +30,16 @@ const Contact = ({ id, name, phone }) => {
         {" "}
         <MdPhone className={css.icon} /> {phone}
       </p>
-      <button className={css["contact-btn"]} onClick={handleDelete}>
+      <button
+        className={css["contact-btn"]}
+        onClick={() => setIsModalOpen(true)}>
         Delete
       </button>
+      <ConfirmModal
+        actionCallback={handleDelete}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
     </div>
   );
 };
