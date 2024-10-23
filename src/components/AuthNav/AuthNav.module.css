@@ -1,0 +1,21 @@
+.navs {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+.link {
+  color: #fafafa;
+  font-size: 18px;
+  font-weight: 400;
+  transition: color 0.3s ease-in-out;
+}
+
+.link:hover,
+.link:focus {
+  color: #007bff;
+}
+
+.link.active {
+  color: #0056b3;
+}
