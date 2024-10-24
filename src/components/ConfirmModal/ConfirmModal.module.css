@@ -37,7 +37,7 @@
 .btn:hover,
 .btn:focus {
   color: #fafafa;
-  background-color: #007bff;
+  background-color: #00ff0dc4;
 }
 
 .btn.btn-confirm:hover,
