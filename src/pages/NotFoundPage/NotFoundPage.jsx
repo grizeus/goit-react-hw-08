@@ -1,7 +1,8 @@
+import PageTitle from "../../components/PageTitle/PageTitle";
 import styles from "./NotFoundPage.module.css";
 
 const NotFoundPage = () => {
-  return <h1 className={styles.title}>404 - Page Not Found</h1>;
+  return <PageTitle style={styles.title} title={"404 - Page Not Found"} />;
 };
 
 export default NotFoundPage;

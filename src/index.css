@@ -44,20 +44,6 @@ a {
   outline: none;
 }
 
-button {
-  font-size: 20px;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  box-shadow: 0 1px 7px rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  transition: background-color 250ms ease-in-out;
-}
-
-button:hover {
-  background: #ccc;
-}
-
 section {
   margin: 0 auto;
 }

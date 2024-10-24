@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { Formik, Form } from "formik";
 import toast from "react-hot-toast";
 
+import MainButton from "../MainBtn/MainBtn";
 import styles from "./CustomForm.module.css";
 
 const CustomForm = ({
@@ -32,9 +33,7 @@ const CustomForm = ({
       autoComplete="off">
       <Form autoComplete="off" className={styles.form}>
         {children}
-        <button className={styles.btn} type="submit">
-          {btnName}
-        </button>
+        <MainButton>{btnName}</MainButton>
       </Form>
     </Formik>
   );

@@ -1,13 +1,13 @@
 import { Toaster } from "react-hot-toast";
 
 import LoginForm from "../../components/LoginForm/LoginForm";
-import styles from "./LoginPage.module.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 const LoginPage = () => {
   return (
     <section title="login page">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
-      <h1 className={styles.title}>Log in</h1>
+      <PageTitle title="Log in" />
       <LoginForm />
     </section>
   );
