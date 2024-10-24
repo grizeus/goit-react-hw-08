@@ -27,24 +27,6 @@
   font-weight: 700;
 }
 
-.btn {
-  width: 100%;
-  margin: 0;
-  border: none;
-  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
-
-.btn:hover,
-.btn:focus {
-  color: #fafafa;
-  background-color: #00ff0dc4;
-}
-
-.btn.btn-confirm:hover,
-.btn.btn-confirm:focus {
-  background-color: #ff1111c0;
-}
-
 .btn-block {
   display: flex;
   justify-content: center;

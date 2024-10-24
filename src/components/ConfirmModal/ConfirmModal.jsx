@@ -1,7 +1,7 @@
 import ReactModal from "react-modal";
-import clsx from "clsx";
 
 import styles from "./ConfirmModal.module.css";
+import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 
 const afterOpenModal = () => {
   document.body.style.overflow = "hidden";
@@ -12,8 +12,6 @@ const afterCloseModal = () => {
 };
 
 const ConfirmModal = ({ actionCallback, isModalOpen, setIsModalOpen }) => {
-  
-
   const handleClose = () => {
     setIsModalOpen(false);
   };
@@ -30,17 +28,20 @@ const ConfirmModal = ({ actionCallback, isModalOpen, setIsModalOpen }) => {
       <div className={styles["modal-content"]}>
         <h4 className={styles.title}>Are you sure?</h4>
         <div className={styles["btn-block"]}>
-          <button className={clsx(styles.btn, styles["btn-confirm"])} type="submit" onClick={actionCallback}>
+          <SecondaryBtn
+            actionType="warning"
+            isBroad={true}
+            onClick={actionCallback}>
             Confirm
-          </button>
-          <button
-            type="button"
-            className={styles.btn}
+          </SecondaryBtn>
+          <SecondaryBtn
+            actionType="accept"
+            isBroad={true}
             onClick={() => {
               setIsModalOpen(false);
             }}>
             Reject
-          </button>
+          </SecondaryBtn>
         </div>
       </div>
     </ReactModal>

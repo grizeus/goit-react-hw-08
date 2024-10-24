@@ -7,13 +7,3 @@
 .username {
   font-weight: 700;
 }
-
-.btn {
-  font-size: 18px;
-  color: #0e1823;
-}
-
-.btn:hover,
-.btn:focus {
-  color: #ff1111c0;
-}
