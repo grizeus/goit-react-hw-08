@@ -1,8 +1,13 @@
 import Button from "../Button/Button";
-import styles from "./MainBtn.module.css";
+import styles from "./SecondaryBtn.module.css";
 
-const MainBtn = ({ children }) => {
-  return <Button addStyle={styles.main}>{children}</Button>;
+const SecondaryBtn = ({ children, actionType = null, ...props }) => {
+  const style = actionType === "warning" ? styles.warning : styles.accept;
+  return (
+    <Button addStyle={style} {...props}>
+      {children}
+    </Button>
+  );
 };
 
-export default MainBtn;
+export default SecondaryBtn;
