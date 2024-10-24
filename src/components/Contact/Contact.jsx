@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import { deleteContact } from "../../redux/contacts/operations";
 import css from "./Contact.module.css";
+import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 
 const Contact = ({ id, name, phone }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -30,11 +31,12 @@ const Contact = ({ id, name, phone }) => {
         {" "}
         <MdPhone className={css.icon} /> {phone}
       </p>
-      <button
-        className={css["contact-btn"]}
+      <SecondaryBtn
+        actionType="warning"
+        isBroad={true}
         onClick={() => setIsModalOpen(true)}>
         Delete
-      </button>
+      </SecondaryBtn>
       <ConfirmModal
         actionCallback={handleDelete}
         isModalOpen={isModalOpen}

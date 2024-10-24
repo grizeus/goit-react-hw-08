@@ -1,0 +1,22 @@
+.btn {
+  width: 80px;
+}
+
+.btn:hover,
+.btn:focus {
+  color: #fafafa;
+}
+
+.warning:focus,
+.warning:hover {
+  background-color: #ff1111c0;
+}
+
+.accept:focus,
+.accept:hover {
+  background-color: #15b91dc4;
+}
+
+.broad {
+  width: 100%;
+}

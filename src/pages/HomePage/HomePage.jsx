@@ -3,16 +3,15 @@ import { Toaster } from "react-hot-toast";
 
 import ContactForm from "../../components/ContactForm/ContactForm";
 import { selectUser } from "../../redux/auth/selectors";
-import styles from "./HomePage.module.css";
+import PageTitle from "../../components/PageTitle/PageTitle";
 
 const HomePage = () => {
   const user = useSelector(selectUser);
+  const userName = user.name !== null ? user.name : "stranger";
   return (
     <section title="home page">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
-      <h1 className={styles.title}>
-        Welcome, {user.name !== null ? user.name : "stranger"}!
-      </h1>
+      <PageTitle title={`Welcome, ${userName}!`} />
       {user.name !== null && <ContactForm />}
     </section>
   );

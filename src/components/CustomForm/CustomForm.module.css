@@ -35,13 +35,3 @@
   content: "⚠️";
   margin-right: 8px;
 }
-
-.btn {
-  font: inherit;
-  font-weight: 400;
-  font-size: 18px;
-  padding: 8px;
-  letter-spacing: -0.02em;
-  line-height: 130%;
-  width: 124px;
-}
