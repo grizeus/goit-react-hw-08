@@ -10,7 +10,7 @@ const ContactList = () => {
     <section title="Contact list">
       <ul className={css["contact-list"]}>
         {filteredContacts.map(({ id, name, number }) => (
-          <Contact key={id} id={id} name={name} phone={number} />
+          <Contact key={id} id={id} name={name} number={number} />
         ))}
       </ul>
     </section>
