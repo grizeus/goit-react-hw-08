@@ -17,6 +17,7 @@ const ConfirmModal = ({ actionCallback, isModalOpen, setIsModalOpen }) => {
   };
   return (
     <ReactModal
+      ariaHideApp={false}
       isOpen={isModalOpen}
       onAfterOpen={afterOpenModal}
       onRequestClose={handleClose}
