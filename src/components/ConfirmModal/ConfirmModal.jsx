@@ -27,7 +27,7 @@ const ConfirmModal = ({ actionCallback, isModalOpen, setIsModalOpen }) => {
       contentLabel="Confirm Modal"
       closeTimeoutMS={200}>
       <div className={styles["modal-content"]}>
-        <h4 className={styles.title}>Are you sure?</h4>
+        <h4 className={styles.title}>Delete contact?</h4>
         <div className={styles["btn-block"]}>
           <SecondaryBtn
             actionType="warning"

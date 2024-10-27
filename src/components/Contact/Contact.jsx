@@ -10,7 +10,7 @@ import {
   updateContactNumber,
 } from "../../redux/contacts/operations";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
-import Editable from "../Editable/Editable";
+import EditableField from "../EditableField/EditableField";
 import styles from "./Contact.module.css";
 
 const Contact = ({ id, name, number }) => {
@@ -30,33 +30,24 @@ const Contact = ({ id, name, number }) => {
     <div className={styles.contact}>
       <div className={styles["contact-content"]}>
         <MdPerson className={styles.icon} />
-        <Editable text={name} placeholder="Name" className={styles["contact-name"]}>
-          <input
-            className={styles.input}
-            name="name"
-            type="text"
-            placeholder="Name"
-            value={name}
-            onChange={e => {
-              dispatch(updateContactName({ id, name: e.target.value }));
-            }}
-          />
-        </Editable>
+        <EditableField
+          id={id}
+          text={name}
+          field="name"
+          placeholder="Name"
+          operation={updateContactName}
+          className={styles["contact-name"]}
+        />
       </div>
       <div className={styles["contact-content"]}>
         <MdPhone className={styles.icon} />
-        <Editable text={number} placeholder="Phone number">
-          <input
-            className={styles.input}
-            name="phone"
-            type="text"
-            placeholder="Phone number"
-            value={number}
-            onChange={e => {
-              dispatch(updateContactNumber({ id, number: e.target.value }));
-            }}
-          />
-        </Editable>
+        <EditableField
+          id={id}
+          text={number}
+          field={"number"}
+          placeholder="Phone number"
+          operation={updateContactNumber}
+        />
       </div>
       <SecondaryBtn
         actionType="warning"
@@ -64,11 +55,11 @@ const Contact = ({ id, name, number }) => {
         onClick={() => setIsModalOpen(true)}>
         Delete
       </SecondaryBtn>
-      <ConfirmModal
+      {isModalOpen && <ConfirmModal
         actionCallback={handleDelete}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      />
+      />}
     </div>
   );
 };

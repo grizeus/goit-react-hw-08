@@ -17,7 +17,7 @@ const SearchBox = () => {
   return (
     <section title="Search box">
       <div className={css.wrapper}>
-        <label htmlFor={searchID}>Find contacts by name/phone number</label>
+        <label htmlFor={searchID}>Find contact by name/phone number</label>
         <input
           className={css["search-input"]}
           id={searchID}

@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchContacts, addContact, deleteContact, updateContactName, updateContactNumber } from "./operations";
+import {
+  fetchContacts,
+  addContact,
+  deleteContact,
+  updateContactName,
+  updateContactNumber,
+} from "./operations";
 import { logOut } from "../auth/operations";
 
 const INITIAL_STATE = {
@@ -20,6 +26,22 @@ const handleRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: INITIAL_STATE,
+  reducers: {
+    updateContactName(state, action) {
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload.id
+      );
+        state.items[index].name = action.payload.value;
+    },
+    updateContactNumber(state, action) {
+      const index = state.items.findIndex(
+        contact => contact.id === action.payload.id
+      );
+      if (index !== -1) {
+        state.items[index].number = action.payload.number;
+      }
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
@@ -37,23 +59,15 @@ const contactsSlice = createSlice({
       })
       .addCase(addContact.rejected, handleRejected)
       .addCase(updateContactName.pending, handlePending)
-      .addCase(updateContactName.fulfilled, (state, action) => {
+      .addCase(updateContactName.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
-        const index = state.items.findIndex(
-          contact => contact.id === action.payload.id
-        );
-        state.items[index].name = action.payload.name;
       })
       .addCase(updateContactName.rejected, handleRejected)
       .addCase(updateContactNumber.pending, handlePending)
-      .addCase(updateContactNumber.fulfilled, (state, action) => {
+      .addCase(updateContactNumber.fulfilled, (state) => {
         state.loading = false;
         state.error = null;
-        const index = state.items.findIndex(
-          contact => contact.id === action.payload.id
-        );
-        state.items[index].number = action.payload.number;
       })
       .addCase(updateContactNumber.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)

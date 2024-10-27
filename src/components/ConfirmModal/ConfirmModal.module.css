@@ -1,5 +1,6 @@
 .modal {
   background-color: #6989a7;
+  border: 2px solid #fafafa;
   border-radius: 8px;
   padding: 32px;
   width: 200px;
@@ -23,8 +24,8 @@
 
 .title {
   text-align: center;
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight: 400;
 }
 
 .btn-block {
