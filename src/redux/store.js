@@ -5,7 +5,6 @@ import storage from "redux-persist/lib/storage";
 import contactsReducer from "./contacts/slice";
 import filtersReducer from "./filters/slice";
 import authReducer from "./auth/slice";
-import editReducer from "./edit/slice";
 
 const persistConfig = {
   key: "root",
@@ -16,7 +15,6 @@ const reducers = combineReducers({
   auth: authReducer,
   contacts: contactsReducer,
   filters: filtersReducer,
-  edit: editReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

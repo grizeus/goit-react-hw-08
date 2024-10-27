@@ -17,7 +17,10 @@ export const addContact = createAsyncThunk(
   "contacts/addContact",
   async ({ name, number }, thunkAPI) => {
     try {
-      const response = await instanceContacts.post("/contacts", { name, number });
+      const response = await instanceContacts.post("/contacts", {
+        name,
+        number,
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -25,11 +28,18 @@ export const addContact = createAsyncThunk(
   }
 );
 
-export const updateContactName = createAsyncThunk(  
+export const updateContactName = createAsyncThunk(
   "contacts/updateContactName",
-  async ({ id, name }, thunkAPI) => {
+  async ({ id, field, value }, thunkAPI) => {
     try {
-      const response = await instanceContacts.patch(`/contacts/${id}`, { name });
+      thunkAPI.dispatch({
+        type: "contacts/updateContactName",
+        payload: { id, field, value },
+      });
+
+      const response = await instanceContacts.patch(`/contacts/${id}`, {
+        [field]: value,
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
@@ -39,9 +49,15 @@ export const updateContactName = createAsyncThunk(
 
 export const updateContactNumber = createAsyncThunk(
   "contacts/updateContactNumber",
-  async ({ id, number }, thunkAPI) => {
+  async ({ id, field, value }, thunkAPI) => {
     try {
-      const response = await instanceContacts.patch(`/contacts/${id}`, { number });
+      thunkAPI.dispatch({
+        type: "contacts/updateContactNumber",
+        payload: { id, field, value },
+      });
+      const response = await instanceContacts.patch(`/contacts/${id}`, {
+        [field]: value
+      });
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
