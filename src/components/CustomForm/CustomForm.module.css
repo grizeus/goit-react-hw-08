@@ -20,7 +20,7 @@
 .input:focus,
 .input:hover {
   outline: none;
-  background: #ccc;
+  background-color: #d5edfd;
 }
 
 .error {

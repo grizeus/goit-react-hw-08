@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { PiAddressBookFill } from "react-icons/pi";
 import { useEffect } from "react";
 
 import SearchBox from "../../components/SearchBox/SearchBox";
@@ -10,6 +11,7 @@ import { selectError, selectIsLoading } from "../../redux/contacts/selectors";
 import { Toaster } from "react-hot-toast";
 import PageTitle from "../../components/PageTitle/PageTitle";
 
+import styles from "./ContactsPage.module.css";
 const ContactsPage = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
@@ -21,7 +23,10 @@ const ContactsPage = () => {
   return (
     <section title="contacts page">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
+      <div className={styles["title-block"]}>
+      <PiAddressBookFill className={styles.icon} />
       <PageTitle title="Phone book" />
+      </div>
       <SearchBox />
       {isLoading && !error && <Loader />}
       {error && <Error message={error} />}
