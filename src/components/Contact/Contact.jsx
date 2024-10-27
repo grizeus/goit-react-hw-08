@@ -55,11 +55,11 @@ const Contact = ({ id, name, number }) => {
         onClick={() => setIsModalOpen(true)}>
         Delete
       </SecondaryBtn>
-      <ConfirmModal
+      {isModalOpen && <ConfirmModal
         actionCallback={handleDelete}
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-      />
+      />}
     </div>
   );
 };

@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 
+import styles from "./EditableField.module.css";
+
 const ControlledInput = ({ text, placeholder, onChange }) => {
   return (
     <input
+      className={styles.input}
       type="text"
       value={text}
       placeholder={placeholder}
