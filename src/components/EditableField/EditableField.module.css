@@ -12,3 +12,15 @@
   outline: none;
   background: #ccc;
 }
+
+.span {
+  cursor: pointer;
+}
+
+.spanWrapper {
+  max-width: 172px;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

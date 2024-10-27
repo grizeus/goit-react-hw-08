@@ -46,8 +46,8 @@ const EditableField = ({ id, field, text, placeholder, operation, ...props }) =>
           />
         </div>
       ) : (
-        <div onClick={() => setEditing(true)}>
-          <span>{curText || placeholder || "Editable content"}</span>
+        <div onClick={() => setEditing(true)} className={styles.spanWrapper}>
+          <span className={styles.span}>{curText || placeholder || "Editable content"}</span>
         </div>
       )}
     </div>

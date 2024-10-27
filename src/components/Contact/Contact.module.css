@@ -13,7 +13,7 @@
 .contact-content {
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-baseline;
   gap: 4px;
 }
 
