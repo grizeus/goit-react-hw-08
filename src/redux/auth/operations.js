@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instanceContacts from "../../api/api";
+import toast from "react-hot-toast";
 
 
 const setAuthHeader = token => {
@@ -16,8 +17,10 @@ export const register = createAsyncThunk(
     try {
       const res = await instanceContacts.post("/users/signup", credentials);
       setAuthHeader(res.data.token);
+      toast.success("Success register!");
       return res.data;
     } catch (e) {
+      toast.error(e.message);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -29,8 +32,10 @@ export const logIn = createAsyncThunk(
     try {
       const res = await instanceContacts.post("/users/login", credentials);
       setAuthHeader(res.data.token);
+      toast.success("Success login!");
       return res.data;
     } catch (e) {
+      toast.error(e.message);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
