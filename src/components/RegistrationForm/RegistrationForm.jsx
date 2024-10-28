@@ -10,6 +10,7 @@ const initialRegister = {
   name: "",
   email: "",
   password: "",
+  confirmPassword: "",
 };
 
 const validationSchema = Yup.object().shape({
@@ -22,6 +23,9 @@ const validationSchema = Yup.object().shape({
     .min(8, "Too short!")
     .max(35, "Too long!")
     .required("Required"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Required"),
 });
 
 const RegistrationForm = () => {
@@ -29,6 +33,7 @@ const RegistrationForm = () => {
   const nameID = useId();
   const emailID = useId();
   const passwordID = useId();
+  const confirmPasswordID = useId();
 
   return (
     <CustomForm
@@ -65,6 +70,15 @@ const RegistrationForm = () => {
         id={passwordID}
       />
       <ErrorMessage className={styles.error} name="password" component="span" />
+
+      <label htmlFor={confirmPasswordID}>Confirm password</label>
+      <Field
+        className={styles.input}
+        type="password"
+        name="confirmPassword"
+        id={confirmPasswordID}
+      />
+      <ErrorMessage className={styles.error} name="confirmPassword" component="span" />
     </CustomForm>
   );
 };

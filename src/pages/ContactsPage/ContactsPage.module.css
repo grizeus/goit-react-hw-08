@@ -1,0 +1,12 @@
+.title-block {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-baseline;
+  gap: 8px;
+}
+
+.icon {
+  fill: #ffe0ab;
+  width: 34px;
+  height: 34px;
+}
