@@ -6,21 +6,23 @@ import contactsReducer from "./contacts/slice";
 import filtersReducer from "./filters/slice";
 import authReducer from "./auth/slice";
 
-const persistConfig = {
-  key: "root",
+const authPersistConfig = {
+  key: "auth",
   storage,
+  whitelist: ["token"],
 };
 
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+
 const reducers = combineReducers({
-  auth: authReducer,
+  auth: persistedAuthReducer,
   contacts: contactsReducer,
   filters: filtersReducer,
 });
 
-const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: getDefaultMiddleware => getDefaultMiddleware({
     serializableCheck: {
       ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import instanceContacts from "../../api/api";
+import toast from "react-hot-toast";
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
@@ -21,8 +22,10 @@ export const addContact = createAsyncThunk(
         name,
         number,
       });
+      toast.success("Contact added!");
       return response.data;
     } catch (e) {
+      toast.error(e.message);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -40,8 +43,10 @@ export const updateContactName = createAsyncThunk(
       const response = await instanceContacts.patch(`/contacts/${id}`, {
         [field]: value,
       });
+      toast.success(`Contact ${field} updated!`);
       return response.data;
     } catch (e) {
+      toast.error(e.message);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -58,8 +63,10 @@ export const updateContactNumber = createAsyncThunk(
       const response = await instanceContacts.patch(`/contacts/${id}`, {
         [field]: value
       });
+      toast.success(`Contact ${field} updated!`);
       return response.data;
     } catch (e) {
+      toast.error(e.message);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
@@ -72,6 +79,7 @@ export const deleteContact = createAsyncThunk(
       const response = await instanceContacts.delete(`/contacts/${id}`);
       return response.data;
     } catch (e) {
+      toast.error(e.message);
       return thunkAPI.rejectWithValue(e.message);
     }
   }
