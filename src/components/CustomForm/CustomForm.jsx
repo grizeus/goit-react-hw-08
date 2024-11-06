@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { Formik, Form } from "formik";
+import toast from "react-hot-toast";
 
 import MainButton from "../MainBtn/MainBtn";
 import styles from "./CustomForm.module.css";
@@ -8,18 +9,26 @@ const CustomForm = ({
   onSubmit,
   initialValues,
   validationSchema,
+  type,
   btnName,
   children,
 }) => {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    try {
-      dispatch(onSubmit(values));
-      actions.resetForm();
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(onSubmit(values))
+      .unwrap()
+      .then(() => {
+        if (type === "addContact") {
+          toast.success("Contact added!");
+        } else {
+          toast.success(`Success ${type}!`);
+        }
+      })
+      .catch(() => {
+        toast.error(`${type.toUpper()} error!`);
+      });
+    actions.resetForm();
   };
 
   return (

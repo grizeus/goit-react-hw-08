@@ -40,6 +40,7 @@ const RegistrationForm = () => {
       onSubmit={register}
       initialValues={initialRegister}
       validationSchema={validationSchema}
+      type="registration"
       btnName="Sign up"
       id={formID}>
       <label htmlFor={nameID}>Name</label>
