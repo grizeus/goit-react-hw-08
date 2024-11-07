@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
 
 import styles from "./EditableField.module.css";
 
@@ -16,7 +17,14 @@ const ControlledInput = ({ text, placeholder, onChange }) => {
   );
 };
 
-const EditableField = ({ id, field, text, placeholder, operation, ...props }) => {
+const EditableField = ({
+  id,
+  field,
+  text,
+  placeholder,
+  operation,
+  ...props
+}) => {
   const [isEditing, setEditing] = useState(false);
   const [curText, setCurText] = useState(text);
   const dispatch = useDispatch();
@@ -31,7 +39,14 @@ const EditableField = ({ id, field, text, placeholder, operation, ...props }) =>
 
   const finishEdit = () => {
     if (curText !== text) {
-      dispatch(operation({ id, field, value: curText }));
+      dispatch(operation({ id, field, value: curText }))
+        .unwrap()
+        .then(() => {
+          toast.success(`Contact ${field} updated`);
+        })
+        .catch(e => {
+          toast.error(e.message);
+        });
     }
     setEditing(false);
   };
@@ -47,7 +62,9 @@ const EditableField = ({ id, field, text, placeholder, operation, ...props }) =>
         </div>
       ) : (
         <div onClick={() => setEditing(true)} className={styles.spanWrapper}>
-          <span className={styles.span}>{curText || placeholder || "Editable content"}</span>
+          <span className={styles.span}>
+            {curText || placeholder || "Editable content"}
+          </span>
         </div>
       )}
     </div>

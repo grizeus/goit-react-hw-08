@@ -32,6 +32,7 @@ const ContactForm = () => {
       onSubmit={addContact}
       initialValues={initialContact}
       validationSchema={validationSchema}
+      type="addContact"
       btnName="Add contact"
       id={formID}>
       <label htmlFor={nameID}>Name</label>

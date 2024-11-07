@@ -29,6 +29,7 @@ const LoginForm = () => {
       onSubmit={logIn}
       initialValues={initialLogin}
       validationSchema={validationSchema}
+      type="login"
       btnName="Log In"
       id={formID}>
       <label htmlFor={emailID}>Email</label>
