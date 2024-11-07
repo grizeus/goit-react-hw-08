@@ -17,13 +17,15 @@ const Contact = ({ id, name, number }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const handleDelete = () => {
-    try {
-      dispatch(deleteContact(id));
-      toast.success("Contact deleted!");
-    } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong!");
-    }
+    dispatch(deleteContact(id))
+      .unwrap()
+      .then(() => {
+        toast.success("Contact deleted!");
+      })
+      .catch(e => {
+        console.log(e.message);
+        toast.error(e.message);
+      });
   };
 
   return (
@@ -55,11 +57,13 @@ const Contact = ({ id, name, number }) => {
         onClick={() => setIsModalOpen(true)}>
         Delete
       </SecondaryBtn>
-      {isModalOpen && <ConfirmModal
-        actionCallback={handleDelete}
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-      />}
+      {isModalOpen && (
+        <ConfirmModal
+          actionCallback={handleDelete}
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+        />
+      )}
     </div>
   );
 };
