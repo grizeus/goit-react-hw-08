@@ -3,3 +3,11 @@
   grid-template-columns: repeat(auto-fit, max(200px));
   gap: 5px 40px;
 }
+
+.notification {
+  font-size: 18px;
+  font-weight: 500;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
