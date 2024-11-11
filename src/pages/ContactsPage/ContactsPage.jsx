@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/Error/Error";
+import ContactForm from "../../components/ContactForm/ContactForm";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectError, selectIsLoading } from "../../redux/contacts/selectors";
@@ -24,9 +25,10 @@ const ContactsPage = () => {
     <section title="contacts page">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
       <div className={styles["title-block"]}>
-      <PiAddressBookFill className={styles.icon} />
-      <PageTitle title="Phone book" />
+        <PiAddressBookFill className={styles.icon} />
+        <PageTitle title="Phone book" />
       </div>
+      <ContactForm />
       <SearchBox />
       {isLoading && !error && <Loader />}
       {error && <Error message={error} />}

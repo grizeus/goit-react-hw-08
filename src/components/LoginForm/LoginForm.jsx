@@ -12,7 +12,7 @@ const initialLogin = {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email().required("Required"),
+  email: Yup.string().email("Email must be a valid email").required("Required"),
   password: Yup.string()
     .min(8, "Too short!")
     .max(35, "Too long!")
