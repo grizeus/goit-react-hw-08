@@ -24,14 +24,12 @@
 }
 
 .error {
-  width: 160px;
-  padding: 4px;
-  border: 0.5px solid #ff1111c0;
-  border-radius: 8px;
-  color: #ff1111c0;
+  font-size: 14px;
+  line-height: 142%;
+  color: #ef4444;
 }
 
 .error::before {
   content: "⚠️";
-  margin-right: 8px;
+  margin-right: 4px;
 }

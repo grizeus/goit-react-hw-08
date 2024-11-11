@@ -18,7 +18,7 @@ const validationSchema = Yup.object().shape({
     .min(2, "Too short!")
     .max(20, "Too long!")
     .required("Required"),
-  email: Yup.string().email().required("Required"),
+  email: Yup.string().email("Email must be a valid email").required("Required"),
   password: Yup.string()
     .min(8, "Too short!")
     .max(35, "Too long!")
@@ -79,7 +79,11 @@ const RegistrationForm = () => {
         name="confirmPassword"
         id={confirmPasswordID}
       />
-      <ErrorMessage className={styles.error} name="confirmPassword" component="span" />
+      <ErrorMessage
+        className={styles.error}
+        name="confirmPassword"
+        component="span"
+      />
     </CustomForm>
   );
 };
