@@ -5,6 +5,12 @@ import toast from "react-hot-toast";
 import MainButton from "../MainBtn/MainBtn";
 import styles from "./CustomForm.module.css";
 
+const capitalize = s => {
+  if (typeof s === "string") {
+    return s && s[0].toUpperCase() + s.slice(1);
+  }
+};
+
 const CustomForm = ({
   onSubmit,
   initialValues,
@@ -26,7 +32,7 @@ const CustomForm = ({
         }
       })
       .catch(() => {
-        toast.error(`${type.toUpper()} error!`);
+        toast.error(`${capitalize(type)} error!`);
       });
     actions.resetForm();
   };

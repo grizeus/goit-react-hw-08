@@ -51,6 +51,16 @@ const Contact = ({ id, name, number }) => {
           operation={updateContactNumber}
         />
       </div>
+      <div className={styles["contact-classname"]}>
+        <EditableField id={id} placeholder="E-mail" />
+      </div>
+      <div className={styles["contact-classname"]}>
+        {/* need to update with icon or something */}
+        <EditableField id={id} placeholder="Is favorite" />
+      </div>
+      <div className={styles["contact-classname"]}>
+        <EditableField id={id} placeholder="Contact type" />
+      </div>
       <SecondaryBtn
         actionType="warning"
         isBroad={true}
