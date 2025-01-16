@@ -8,7 +8,7 @@ import Error from "../../components/Error/Error";
 import ContactForm from "../../components/ContactForm/ContactForm";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
-import { selectError, selectIsLoading } from "../../redux/contacts/selectors";
+import { selectError, selectIsLoading, selectPaginationData } from "../../redux/contacts/selectors";
 import { Toaster } from "react-hot-toast";
 import PageTitle from "../../components/PageTitle/PageTitle";
 
@@ -17,10 +17,11 @@ const ContactsPage = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
+  const { page, totalPages, perPage, sortBy, sortOrder } = useSelector(selectPaginationData);
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
+    dispatch(fetchContacts({ page, totalPages, perPage, sortBy, sortOrder }));
+  }, [dispatch, page, totalPages, perPage, sortBy, sortOrder]);
   return (
     <section title="contacts page">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />

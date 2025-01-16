@@ -48,15 +48,43 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
+    const persistedUser = state.auth.user;
     const persistedToken = state.auth.accessToken;
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue("Unable to fetch user");
     }
 
     try {
-      setAuthHeader(persistedToken);
       const res = await instanceContacts.post("/auth/refresh");
-      return res.data.accessToken;
+      setAuthHeader(res.data.accessToken);
+      return persistedUser;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const resetEmail = createAsyncThunk(
+  "auth/resetEmail",
+  async (credentials, thunkAPI) => {
+    try {
+      const res = await instanceContacts.post(
+        "/auth/send-reset-email",
+        credentials
+      );
+      return res.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const resetPwd = createAsyncThunk(
+  "auth/resetPwd",
+  async (credentials, thunkAPI) => {
+    try {
+      const res = await instanceContacts.post("/auth/reset-pwd", credentials);
+      return res.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }

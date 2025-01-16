@@ -8,7 +8,8 @@ import styles from "../CustomForm/CustomForm.module.css";
 
 const initialContact = {
   name: "",
-  number: "",
+  phoneNumber: "",
+  contactType: "personal",
 };
 
 const validationSchema = Yup.object().shape({
@@ -16,16 +17,20 @@ const validationSchema = Yup.object().shape({
     .min(3, "Too short!")
     .max(50, "Too long!")
     .required("Required"),
-  number: Yup.string()
+  phoneNumber: Yup.string()
     .min(5, "Too short!")
     .max(13, "Too long!")
-    .required("Required"),
+    .required("Phone number is required"),
+  contactType: Yup.string()
+    .oneOf(["work", "personal", "home"])
+    .required("Choses from: work, personal, home"),
 });
 
 const ContactForm = () => {
   const formID = useId();
   const nameID = useId();
   const numberID = useId();
+  const typeID = useId();
 
   return (
     <CustomForm
@@ -49,9 +54,17 @@ const ContactForm = () => {
       <Field
         className={styles.input}
         type="text"
-        name="number"
+        name="phoneNumber"
         placeholder="+38-XXX-XXX-XX-XX"
         id={numberID}
+      />
+      <label htmlFor={typeID}>Contact type</label>
+      <Field
+        className={styles.input}
+        type="text"
+        name="contactType"
+        placeholder="work, personal, home"
+        id={typeID}
       />
       <ErrorMessage className={styles.error} name="number" component="span" />
     </CustomForm>

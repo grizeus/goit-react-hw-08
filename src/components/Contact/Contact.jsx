@@ -6,14 +6,15 @@ import toast from "react-hot-toast";
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
 import {
   deleteContact,
+  updateContactEmail,
   updateContactName,
-  updateContactNumber,
+  updateContactPhoneNumber,
 } from "../../redux/contacts/operations";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 import EditableField from "../EditableField/EditableField";
 import styles from "./Contact.module.css";
 
-const Contact = ({ id, name, number }) => {
+const Contact = ({ id, name, phoneNumber, email, contactType, isFavourite }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const handleDelete = () => {
@@ -45,21 +46,31 @@ const Contact = ({ id, name, number }) => {
         <MdPhone className={styles.icon} />
         <EditableField
           id={id}
-          text={number}
-          field={"number"}
+          text={phoneNumber}
+          field={"phoneNumber"}
           placeholder="Phone number"
-          operation={updateContactNumber}
+          operation={updateContactPhoneNumber}
         />
       </div>
       <div className={styles["contact-classname"]}>
-        <EditableField id={id} placeholder="E-mail" />
+        <EditableField
+          id={id}
+          text={email}
+          field={"email"}
+          placeholder="E-mail"
+          operation={updateContactEmail}
+        />
       </div>
       <div className={styles["contact-classname"]}>
         {/* need to update with icon or something */}
-        <EditableField id={id} placeholder="Is favorite" />
+        <EditableField
+          id={id}
+          text={isFavourite ? "hommie" : "nah"}
+          placeholder="Is favorite"
+        />
       </div>
       <div className={styles["contact-classname"]}>
-        <EditableField id={id} placeholder="Contact type" />
+        <EditableField id={id} text={contactType} placeholder="Contact type" />
       </div>
       <SecondaryBtn
         actionType="warning"
