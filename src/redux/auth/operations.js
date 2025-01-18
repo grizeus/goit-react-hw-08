@@ -13,9 +13,12 @@ export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      const res = await instanceContacts.post("auth/register", credentials);
-      setAuthHeader(res.data.accessToken);
-      return res.data;
+      const { data: wrap } = await instanceContacts.post(
+        "auth/register",
+        credentials
+      );
+      setAuthHeader(wrap.data.accessToken);
+      return wrap.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -26,9 +29,12 @@ export const logIn = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const res = await instanceContacts.post("/auth/login", credentials);
-      setAuthHeader(res.data.accessToken);
-      return res.data;
+      const { data: wrap } = await instanceContacts.post(
+        "/auth/login",
+        credentials
+      );
+      setAuthHeader(wrap.data.accessToken);
+      return wrap.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -55,8 +61,8 @@ export const refreshUser = createAsyncThunk(
     }
 
     try {
-      const res = await instanceContacts.post("/auth/refresh");
-      setAuthHeader(res.data.accessToken);
+      const { data: wrap } = await instanceContacts.post("/auth/refresh");
+      setAuthHeader(wrap.data.accessToken);
       return persistedUser;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

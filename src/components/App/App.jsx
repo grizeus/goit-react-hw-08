@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../../components/Layout/Layout";
 import { refreshUser } from "../../redux/auth/operations";
-import { selectIsrefreshing } from "../../redux/auth/selectors";
+import { selectIsRefreshing } from "../../redux/auth/selectors";
 import { RestrictedRoute } from "../../routes/RestrictedRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 import RegistrationPage from "../../pages/RegistrationPage/RegistrationPage";
@@ -19,7 +19,7 @@ const NotFoundPage = lazy(() =>
 
 function App() {
   const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsrefreshing);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(refreshUser());

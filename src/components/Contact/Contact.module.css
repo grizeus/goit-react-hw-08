@@ -13,7 +13,7 @@
 .contact-content {
   display: flex;
   justify-content: flex-start;
-  align-items: flex-baseline;
+  align-items: baseline;
   gap: 4px;
 }
 
@@ -26,4 +26,16 @@
 .contact-name {
   font-size: 18px;
   font-weight: 700;
+}
+
+.favIcon {
+  fill: #9b7f74;
+  width: 18px;
+  height: 18px;
+}
+
+.favBtn {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
 }

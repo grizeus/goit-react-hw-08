@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import SearchBox from "../../components/SearchBox/SearchBox";
 import Loader from "../../components/Loader/Loader";
 import Error from "../../components/Error/Error";
-import ContactForm from "../../components/ContactForm/ContactForm";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
 import { selectError, selectIsLoading, selectPaginationData } from "../../redux/contacts/selectors";
@@ -29,7 +28,6 @@ const ContactsPage = () => {
         <PiAddressBookFill className={styles.icon} />
         <PageTitle title="Phone book" />
       </div>
-      <ContactForm />
       <SearchBox />
       {isLoading && !error && <Loader />}
       {error && <Error message={error} />}

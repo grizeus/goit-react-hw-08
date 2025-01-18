@@ -3,8 +3,7 @@ import {
   fetchContacts,
   addContact,
   deleteContact,
-  updateContactName,
-  updateContactPhoneNumber,
+  updateField,
 } from "./operations";
 import { logOut } from "../auth/operations";
 
@@ -16,10 +15,8 @@ const INITIAL_STATE = {
     hasPreviousPage: false,
     page: 1,
     totalItems: 0,
-    totalPages: 0,
+    totalPages: 1,
     perPage: 10,
-    sortBy: "name",
-    sortOrder: "asc",
   },
   error: null,
 };
@@ -36,30 +33,14 @@ const handleRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: INITIAL_STATE,
-  reducers: {
-    updateContactName(state, action) {
-      const index = state.items.findIndex(
-        contact => contact._id === action.payload._id
-      );
-      state.items[index].name = action.payload.value;
-    },
-    updateContactPhoneNumber(state, action) {
-      const index = state.items.findIndex(
-        contact => contact._id === action.payload._id
-      );
-      if (index !== -1) {
-        state.items[index].phoneNumber = action.payload.phoneNumber;
-      }
-    },
-  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = action.payload.data.data;
-        state.paginationData = action.payload.data.paginationData;
+        state.items = action.payload.data;
+        state.paginationData = action.payload.paginationData;
       })
       .addCase(fetchContacts.rejected, handleRejected)
       .addCase(addContact.pending, handlePending)
@@ -69,18 +50,18 @@ const contactsSlice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(addContact.rejected, handleRejected)
-      .addCase(updateContactName.pending, handlePending)
-      .addCase(updateContactName.fulfilled, state => {
+      .addCase(updateField.pending, handlePending)
+      .addCase(updateField.fulfilled, (state, action) => {
+        const updatedContact = action.payload.data;
+         const index = state.items.findIndex(
+           contact => contact._id === updatedContact._id
+        );
+        if (index !== -1)
+          state.items[index] = updatedContact;
         state.loading = false;
         state.error = null;
       })
-      .addCase(updateContactName.rejected, handleRejected)
-      .addCase(updateContactPhoneNumber.pending, handlePending)
-      .addCase(updateContactPhoneNumber.fulfilled, state => {
-        state.loading = false;
-        state.error = null;
-      })
-      .addCase(updateContactPhoneNumber.rejected, handleRejected)
+      .addCase(updateField.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.loading = false;
@@ -93,6 +74,14 @@ const contactsSlice = createSlice({
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(logOut.fulfilled, state => {
         state.items = [];
+        state.paginationData = {
+          hasNextPage: false,
+          hasPreviousPage: false,
+          page: 1,
+          totalItems: 0,
+          totalPages: 1,
+          perPage: 10
+        };
         state.error = null;
         state.loading = false;
       });

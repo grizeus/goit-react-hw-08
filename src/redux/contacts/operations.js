@@ -8,7 +8,7 @@ export const fetchContacts = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const res = await instanceContacts.get("/contacts", {
+      const {data: wrap} = await instanceContacts.get("/contacts", {
         params: {
           page,
           perPage,
@@ -16,7 +16,7 @@ export const fetchContacts = createAsyncThunk(
           sortOrder,
         },
       });
-      return res.data;
+      return wrap.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -27,15 +27,15 @@ export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (payload, thunkAPI) => {
     try {
-      const response = await instanceContacts.post("/contacts", payload);
-      return response.data;
+      const { data: wrap } = await instanceContacts.post("/contacts", payload);
+      return wrap.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-export const updateContactName = createAsyncThunk(
+export const updateField = createAsyncThunk(
   "contacts/updateContactName",
   async ({ id, field, value }, thunkAPI) => {
     try {
@@ -43,58 +43,21 @@ export const updateContactName = createAsyncThunk(
         type: "contacts/updateContactName",
         payload: { id, field, value },
       });
-
       const response = await instanceContacts.patch(`/contacts/${id}`, {
         [field]: value,
       });
       return response.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const updateContactPhoneNumber = createAsyncThunk(
-  "contacts/updateContactPhoneNumber",
-  async ({ id, field, value }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch({
-        type: "contacts/updateContactPhoneNumber",
-        payload: { id, field, value },
-      });
-      const response = await instanceContacts.patch(`/contacts/${id}`, {
-        [field]: value,
-      });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const updateContactEmail = createAsyncThunk(
-  "contacts/updateContactEmail",
-  async ({ id, field, value }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch({
-        type: "contacts/updateContactEmail",
-        payload: { id, field, value },
-      });
-      const response = await instanceContacts.patch(`/contacts/${id}`, {
-        [field]: value,
-      });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(e.response.data.data.errors[0]?.message);
     }
   }
 );
 
 export const deleteContact = createAsyncThunk(
   "contacts/deleteContact",
-  async (_id, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
-      const response = await instanceContacts.delete(`/contacts/${_id}`);
+      const response = await instanceContacts.delete(`/contacts/${id}`);
       return response.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
