@@ -1,4 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+
 import instanceContacts from "../../api/api";
 
 const setAuthHeader = token => {
@@ -12,13 +13,13 @@ const clearAuthHeader = () => {
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
+    const { name, email, password } = credentials;
     try {
-      const { data: wrap } = await instanceContacts.post(
-        "auth/register",
-        credentials
-      );
-      setAuthHeader(wrap.data.accessToken);
-      return wrap.data;
+      await instanceContacts.post("auth/register", {
+        name,
+        email,
+        password,
+      });
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -35,6 +36,42 @@ export const logIn = createAsyncThunk(
       );
       setAuthHeader(wrap.data.accessToken);
       return wrap.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+const navigate = url => {
+  window.location.href = url;
+};
+
+export const getLoginOAuth = createAsyncThunk(
+  "auth/getLoginGoogle",
+  async (_, thunkAPI) => {
+    try {
+      const { data: wrap } = await instanceContacts.post("/auth/oauth");
+      navigate(wrap.data.url);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const loginOAuth = createAsyncThunk(
+  "auth/loginGoogle",
+  async (_, thunkAPI) => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const oauthData = JSON.parse(
+        decodeURIComponent(urlParams.get("oauthData"))
+      );
+
+      if (oauthData?.data?.accessToken) {
+        setAuthHeader(oauthData.data.accessToken);
+        return oauthData.data;
+      }
+      throw new Error("No access token received");
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
