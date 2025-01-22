@@ -4,17 +4,56 @@ import toast from "react-hot-toast";
 
 import styles from "./EditableField.module.css";
 
-const ControlledInput = ({ text, placeholder, onChange }) => {
-  return (
-    <input
-      className={styles.input}
-      type="text"
-      value={text}
-      placeholder={placeholder}
-      onChange={e => onChange(e.target.value)}
-      ref={input => input && input.focus()}
-    />
-  );
+const ControlledInput = ({
+  text,
+  placeholder,
+  onChange,
+  name,
+  options = [],
+  type = "input",
+}) => {
+  const changeHandle = e => {
+    onChange(e.target.value);
+  };
+
+  const reference = el => {
+    el && el.focus();
+  };
+
+  switch (type) {
+    case "select": {
+      return (
+        <select
+          name={name}
+          className={styles.input}
+          placeholder={placeholder}
+          onChange={changeHandle}
+          ref={reference}>
+          <option value="">Select a contact type</option>
+          {options.map((opt, i) => (
+            <option key={`${i}-${opt}`} value={opt}>
+              {opt}
+            </option>
+          ))}
+        </select>
+      );
+    }
+    case "input": {
+      return (
+        <input
+          className={styles.input}
+          type="text"
+          value={text}
+          placeholder={placeholder}
+          onChange={changeHandle}
+          ref={reference}
+        />
+      );
+    }
+    default: {
+      throw new Error("Not compatible editable field");
+    }
+  }
 };
 
 const EditableField = ({
@@ -22,6 +61,8 @@ const EditableField = ({
   field,
   text,
   placeholder,
+  type = "input",
+  options = [],
   operation,
   ...props
 }) => {
@@ -56,6 +97,9 @@ const EditableField = ({
         <div onBlur={finishEdit} onKeyDown={e => handleKeyDown(e)}>
           <ControlledInput
             text={curText}
+            name={field}
+            options={options}
+            type={type}
             placeholder={placeholder}
             onChange={newText => setCurText(newText)}
           />

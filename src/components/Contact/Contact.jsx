@@ -83,11 +83,12 @@ const Contact = ({
         />
       </div>
       <div>
-        {/* TODO: need to select tag here */}
         <EditableField
           id={id}
           text={contactType}
           field={"contactType"}
+          type="select"
+          options={["home", "personal", "work"]}
           placeholder="Contact type"
           operation={updateField}
         />
