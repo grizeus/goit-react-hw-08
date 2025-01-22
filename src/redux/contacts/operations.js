@@ -3,10 +3,20 @@ import instanceContacts from "../../api/api";
 
 export const fetchContacts = createAsyncThunk(
   "contacts/fetchAll",
-  async (_, thunkAPI) => {
+  async (
+    { page = 1, perPage = 10, sortBy = "name", sortOrder = "asc" },
+    thunkAPI
+  ) => {
     try {
-      const response = await instanceContacts.get("/contacts");
-      return response.data;
+      const {data: wrap} = await instanceContacts.get("/contacts", {
+        params: {
+          page,
+          perPage,
+          sortBy,
+          sortOrder,
+        },
+      });
+      return wrap.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -15,20 +25,17 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   "contacts/addContact",
-  async ({ name, number }, thunkAPI) => {
+  async (payload, thunkAPI) => {
     try {
-      const response = await instanceContacts.post("/contacts", {
-        name,
-        number,
-      });
-      return response.data;
+      const { data: wrap } = await instanceContacts.post("/contacts", payload);
+      return wrap.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
   }
 );
 
-export const updateContactName = createAsyncThunk(
+export const updateField = createAsyncThunk(
   "contacts/updateContactName",
   async ({ id, field, value }, thunkAPI) => {
     try {
@@ -36,31 +43,12 @@ export const updateContactName = createAsyncThunk(
         type: "contacts/updateContactName",
         payload: { id, field, value },
       });
-
       const response = await instanceContacts.patch(`/contacts/${id}`, {
         [field]: value,
       });
       return response.data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
-export const updateContactNumber = createAsyncThunk(
-  "contacts/updateContactNumber",
-  async ({ id, field, value }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch({
-        type: "contacts/updateContactNumber",
-        payload: { id, field, value },
-      });
-      const response = await instanceContacts.patch(`/contacts/${id}`, {
-        [field]: value
-      });
-      return response.data;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return thunkAPI.rejectWithValue(e.response.data.data.errors[0]?.message);
     }
   }
 );

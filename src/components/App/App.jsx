@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Layout from "../../components/Layout/Layout";
 import { refreshUser } from "../../redux/auth/operations";
-import { selectIsrefreshing } from "../../redux/auth/selectors";
-import { RestrictedRoute } from "../../routes/RestrictedRoute";
+import { selectIsRefreshing } from "../../redux/auth/selectors";
+import { RestrictedRegRoute } from "../../routes/RestrictedRegisterRoute.jsx";
+import { RestrictedLogRoute } from "../../routes/RestrictedLoginRoute.jsx";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 import RegistrationPage from "../../pages/RegistrationPage/RegistrationPage";
+import OAuthCallback from "../OAuthCollback/OAuthCollback.jsx";
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const ContactsPage = lazy(() =>
   import("../../pages/ContactsPage/ContactsPage")
@@ -19,7 +21,7 @@ const NotFoundPage = lazy(() =>
 
 function App() {
   const dispatch = useDispatch();
-  const isRefreshing = useSelector(selectIsrefreshing);
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -35,8 +37,8 @@ function App() {
           <Route
             path="/registration"
             element={
-              <RestrictedRoute
-                redirectTo="/contacts"
+              <RestrictedRegRoute
+                redirectTo="/login"
                 component={<RegistrationPage />}
               />
             }
@@ -44,12 +46,13 @@ function App() {
           <Route
             path="/login"
             element={
-              <RestrictedRoute
+              <RestrictedLogRoute
                 redirectTo="/contacts"
                 component={<LoginPage />}
               />
             }
           />
+          <Route path="/oauth-callback" element={<OAuthCallback />} />
           <Route
             path="/contacts"
             element={

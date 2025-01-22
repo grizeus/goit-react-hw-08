@@ -3,14 +3,21 @@ import {
   fetchContacts,
   addContact,
   deleteContact,
-  updateContactName,
-  updateContactNumber,
+  updateField,
 } from "./operations";
 import { logOut } from "../auth/operations";
 
 const INITIAL_STATE = {
   items: [],
   loading: false,
+  paginationData: {
+    hasNextPage: false,
+    hasPreviousPage: false,
+    page: 1,
+    totalItems: 0,
+    totalPages: 1,
+    perPage: 10,
+  },
   error: null,
 };
 
@@ -26,29 +33,14 @@ const handleRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: INITIAL_STATE,
-  reducers: {
-    updateContactName(state, action) {
-      const index = state.items.findIndex(
-        contact => contact.id === action.payload.id
-      );
-        state.items[index].name = action.payload.value;
-    },
-    updateContactNumber(state, action) {
-      const index = state.items.findIndex(
-        contact => contact.id === action.payload.id
-      );
-      if (index !== -1) {
-        state.items[index].number = action.payload.number;
-      }
-    },
-  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.items = action.payload;
+        state.items = action.payload.data;
+        state.paginationData = action.payload.paginationData;
       })
       .addCase(fetchContacts.rejected, handleRejected)
       .addCase(addContact.pending, handlePending)
@@ -58,30 +50,38 @@ const contactsSlice = createSlice({
         state.items.push(action.payload);
       })
       .addCase(addContact.rejected, handleRejected)
-      .addCase(updateContactName.pending, handlePending)
-      .addCase(updateContactName.fulfilled, (state) => {
+      .addCase(updateField.pending, handlePending)
+      .addCase(updateField.fulfilled, (state, action) => {
+        const updatedContact = action.payload.data;
+         const index = state.items.findIndex(
+           contact => contact._id === updatedContact._id
+        );
+        if (index !== -1)
+          state.items[index] = updatedContact;
         state.loading = false;
         state.error = null;
       })
-      .addCase(updateContactName.rejected, handleRejected)
-      .addCase(updateContactNumber.pending, handlePending)
-      .addCase(updateContactNumber.fulfilled, (state) => {
-        state.loading = false;
-        state.error = null;
-      })
-      .addCase(updateContactNumber.rejected, handleRejected)
+      .addCase(updateField.rejected, handleRejected)
       .addCase(deleteContact.pending, handlePending)
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          contact => contact.id === action.payload.id
+          contact => contact._id === action.payload._id
         );
         state.items.splice(index, 1);
       })
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(logOut.fulfilled, state => {
         state.items = [];
+        state.paginationData = {
+          hasNextPage: false,
+          hasPreviousPage: false,
+          page: 1,
+          totalItems: 0,
+          totalPages: 1,
+          perPage: 10
+        };
         state.error = null;
         state.loading = false;
       });

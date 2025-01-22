@@ -1,19 +1,28 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { MdPerson, MdPhone } from "react-icons/md";
+import {
+  MdOutlineStarOutline,
+  MdOutlineStarPurple500,
+  MdPerson,
+  MdPhone,
+} from "react-icons/md";
 import toast from "react-hot-toast";
 
 import ConfirmModal from "../../components/ConfirmModal/ConfirmModal";
-import {
-  deleteContact,
-  updateContactName,
-  updateContactNumber,
-} from "../../redux/contacts/operations";
+import { deleteContact, updateField } from "../../redux/contacts/operations";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 import EditableField from "../EditableField/EditableField";
 import styles from "./Contact.module.css";
 
-const Contact = ({ id, name, number }) => {
+
+const Contact = ({
+  id,
+  name,
+  phoneNumber,
+  email,
+  contactType,
+  isFavourite,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const handleDelete = () => {
@@ -23,8 +32,16 @@ const Contact = ({ id, name, number }) => {
         toast.success("Contact deleted!");
       })
       .catch(e => {
-        console.log(e.message);
         toast.error(e.message);
+      });
+  };
+
+  const handleLike = () => {
+    dispatch(updateField({ id, field: "isFavourite", value: !isFavourite }))
+      .unwrap()
+      .then()
+      .catch(e => {
+        toast.error(e);
       });
   };
 
@@ -35,9 +52,9 @@ const Contact = ({ id, name, number }) => {
         <EditableField
           id={id}
           text={name}
-          field="name"
+          field={"name"}
           placeholder="Name"
-          operation={updateContactName}
+          operation={updateField}
           className={styles["contact-name"]}
         />
       </div>
@@ -45,12 +62,38 @@ const Contact = ({ id, name, number }) => {
         <MdPhone className={styles.icon} />
         <EditableField
           id={id}
-          text={number}
-          field={"number"}
+          text={phoneNumber}
+          field={"phoneNumber"}
           placeholder="Phone number"
-          operation={updateContactNumber}
+          operation={updateField}
         />
       </div>
+      <div className={styles["contact-content"]}>
+        <EditableField
+          id={id}
+          text={email}
+          field={"email"}
+          placeholder="E-mail"
+          operation={updateField}
+        />
+      </div>
+      <div>
+        {/* TODO: need to select tag here */}
+        <EditableField
+          id={id}
+          text={contactType}
+          field={"contactType"}
+          placeholder="Contact type"
+          operation={updateField}
+        />
+      </div>
+      <button type="submit" onClick={handleLike} className={styles.favBtn}>
+        {isFavourite ? (
+          <MdOutlineStarPurple500 className={styles.favIcon} />
+        ) : (
+          <MdOutlineStarOutline className={styles.favIcon} />
+        )}
+      </button>
       <SecondaryBtn
         actionType="warning"
         isBroad={true}

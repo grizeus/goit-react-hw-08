@@ -15,9 +15,13 @@ const UserMenu = () => {
 
   return (
     <div className={styles.wrapper}>
-      <p className={styles.username}>{user.name}</p>
-      <SecondaryBtn actionType="warning" onClick={handleLogout}>Logout</SecondaryBtn>
-      
+      <div className={styles.credentials}>
+        <p className={styles.username}>{user.name}</p>
+        <p className={styles.username}>{user.email}</p>
+      </div>
+      <SecondaryBtn actionType="warning" onClick={handleLogout}>
+        Logout
+      </SecondaryBtn>
     </div>
   );
 };

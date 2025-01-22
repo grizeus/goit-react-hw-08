@@ -12,14 +12,23 @@ const ContactList = () => {
     <section title="Contact list">
       {Array.isArray(filteredContacts) && filteredContacts.length > 0 ? (
         <ul className={styles["contact-list"]}>
-          {filteredContacts.map(({ id, name, number }) => (
-            <li key={id}>
-              <Contact id={id} name={name} number={number} />
+          {filteredContacts.map(({ _id, name, phoneNumber, email, contactType, isFavourite }) => (
+            <li key={_id}>
+              <Contact
+                id={_id}
+                name={name}
+                phoneNumber={phoneNumber}
+                email={email}
+                contactType={contactType}
+                isFavourite={isFavourite}
+              />
             </li>
           ))}
         </ul>
       ) : (
-        <span className={styles.notification}>No contacts in your phonebook yet</span>
+        <span className={styles.notification}>
+          No contacts in your phonebook yet
+        </span>
       )}
     </section>
   );

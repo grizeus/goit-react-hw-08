@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import instanceContacts from "../../api/api";
 
+import instanceContacts from "../../api/api";
 
 const setAuthHeader = token => {
   instanceContacts.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -13,10 +13,13 @@ const clearAuthHeader = () => {
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
+    const { name, email, password } = credentials;
     try {
-      const res = await instanceContacts.post("/users/signup", credentials);
-      setAuthHeader(res.data.token);
-      return res.data;
+      await instanceContacts.post("auth/register", {
+        name,
+        email,
+        password,
+      });
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -27,9 +30,48 @@ export const logIn = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const res = await instanceContacts.post("/users/login", credentials);
-      setAuthHeader(res.data.token);
-      return res.data;
+      const { data: wrap } = await instanceContacts.post(
+        "/auth/login",
+        credentials
+      );
+      setAuthHeader(wrap.data.accessToken);
+      return wrap.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+const navigate = url => {
+  window.location.href = url;
+};
+
+export const getLoginOAuth = createAsyncThunk(
+  "auth/getLoginGoogle",
+  async (_, thunkAPI) => {
+    try {
+      const { data: wrap } = await instanceContacts.post("/auth/oauth");
+      navigate(wrap.data.url);
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const loginOAuth = createAsyncThunk(
+  "auth/loginGoogle",
+  async (_, thunkAPI) => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const oauthData = JSON.parse(
+        decodeURIComponent(urlParams.get("oauthData"))
+      );
+
+      if (oauthData?.data?.accessToken) {
+        setAuthHeader(oauthData.data.accessToken);
+        return oauthData.data;
+      }
+      throw new Error("No access token received");
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -38,7 +80,7 @@ export const logIn = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await instanceContacts.post("/users/logout");
+    await instanceContacts.post("/auth/logout");
     clearAuthHeader();
   } catch (e) {
     return thunkAPI.rejectWithValue(e.message);
@@ -49,13 +91,42 @@ export const refreshUser = createAsyncThunk(
   "auth/refresh",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
+    const persistedUser = state.auth.user;
+    const persistedToken = state.auth.accessToken;
     if (persistedToken === null) {
       return thunkAPI.rejectWithValue("Unable to fetch user");
     }
+
     try {
-      setAuthHeader(persistedToken);
-      const res = await instanceContacts.get("/users/current");
+      const { data: wrap } = await instanceContacts.post("/auth/refresh");
+      setAuthHeader(wrap.data.accessToken);
+      return persistedUser;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const resetEmail = createAsyncThunk(
+  "auth/resetEmail",
+  async (credentials, thunkAPI) => {
+    try {
+      const res = await instanceContacts.post(
+        "/auth/send-reset-email",
+        credentials
+      );
+      return res.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const resetPwd = createAsyncThunk(
+  "auth/resetPwd",
+  async (credentials, thunkAPI) => {
+    try {
+      const res = await instanceContacts.post("/auth/reset-pwd", credentials);
       return res.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);

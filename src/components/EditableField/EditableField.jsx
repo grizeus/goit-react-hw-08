@@ -45,7 +45,7 @@ const EditableField = ({
           toast.success(`Contact ${field} updated`);
         })
         .catch(e => {
-          toast.error(e.message);
+          toast.error(e);
         });
     }
     setEditing(false);
