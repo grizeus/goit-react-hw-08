@@ -12,7 +12,7 @@ const ContactList = () => {
     <section title="Contact list">
       {Array.isArray(filteredContacts) && filteredContacts.length > 0 ? (
         <ul className={styles["contact-list"]}>
-          {filteredContacts.map(({ _id, name, phoneNumber, email, contactType, isFavourite }) => (
+          {filteredContacts.map(({ _id, name, phoneNumber, email, contactType, isFavourite, photo }) => (
             <li key={_id}>
               <Contact
                 id={_id}
@@ -21,6 +21,7 @@ const ContactList = () => {
                 email={email}
                 contactType={contactType}
                 isFavourite={isFavourite}
+                contactPic={photo}
               />
             </li>
           ))}
