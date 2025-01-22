@@ -13,7 +13,7 @@ import { deleteContact, updateField } from "../../redux/contacts/operations";
 import SecondaryBtn from "../SecondaryBtn/SecondaryBtn";
 import EditableField from "../EditableField/EditableField";
 import styles from "./Contact.module.css";
-
+import defaultPic from "../../assets/avatar-default.png"
 
 const Contact = ({
   id,
@@ -22,6 +22,7 @@ const Contact = ({
   email,
   contactType,
   isFavourite,
+  contactPic,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
@@ -47,6 +48,10 @@ const Contact = ({
 
   return (
     <div className={styles.contact}>
+      <div className={styles.wrap}>
+        <img className={styles.avatar} src={
+        contactPic ? contactPic : defaultPic} alt="Contact avatar" />
+      </div>
       <div className={styles["contact-content"]}>
         <MdPerson className={styles.icon} />
         <EditableField

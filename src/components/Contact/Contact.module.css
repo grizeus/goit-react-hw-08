@@ -8,6 +8,7 @@
   display: flex;
   flex-direction: column;
   gap: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .contact-content {
@@ -29,7 +30,7 @@
 }
 
 .favIcon {
-  fill: #9b7f74;
+  fill: #df6738;
   width: 18px;
   height: 18px;
 }
@@ -38,4 +39,17 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+}
+
+.avatar {
+  width: 128px;
+  max-height: 128px;
+  height: auto;
+  border-radius: 50%;
+  background-color: rgb(100, 98, 98);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.wrap {
+  align-self: center;
 }
