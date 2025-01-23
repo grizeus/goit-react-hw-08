@@ -67,11 +67,10 @@ const LoginForm = () => {
           component="span"
         />
       </CustomForm>
-      <span>
+      <span className={styles.margin}>
         or
-        <br />
       </span>
-      <button className={styles.gBtn} onClick={handleClick}>Google emblem</button>
+      <button className={styles.gBtn} onClick={handleClick}>Login with Google</button>
     </>
   );
 };

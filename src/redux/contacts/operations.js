@@ -8,7 +8,7 @@ export const fetchContacts = createAsyncThunk(
     thunkAPI
   ) => {
     try {
-      const {data: wrap} = await instanceContacts.get("/contacts", {
+      const { data: wrap } = await instanceContacts.get("/contacts", {
         params: {
           page,
           perPage,
@@ -17,6 +17,17 @@ export const fetchContacts = createAsyncThunk(
         },
       });
       return wrap.data;
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
+export const addFile = createAsyncThunk(
+  "contacts/addFile",
+  async (file, thunkAPI) => {
+    try {
+      return file;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }

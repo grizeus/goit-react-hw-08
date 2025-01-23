@@ -1,15 +1,17 @@
-import { useId } from "react";
-import { Field, ErrorMessage } from "formik";
+import { useId, useState } from "react";
+import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 
 import { addContact } from "../../redux/contacts/operations";
-import CustomForm from "../CustomForm/CustomForm";
+import MainButton from "../MainBtn/MainBtn";
 import styles from "../CustomForm/CustomForm.module.css";
+import { useDispatch } from "react-redux";
 
 const initialContact = {
   name: "",
   phoneNumber: "",
   contactType: "",
+  photo: null,
 };
 
 const emailRegExp =
@@ -28,63 +30,120 @@ const validationSchema = Yup.object().shape({
   contactType: Yup.string()
     .oneOf(["work", "personal", "home"])
     .required("Chose from: work, personal, home"),
-  email: Yup.string().matches(emailRegExp, "Email must be valid")
+  email: Yup.string().matches(emailRegExp, "Email must be valid"),
+  photo: Yup.mixed()
+    .nullable()
+    .test("isFile", "Please select an image file", value => {
+      if (!value) return true;
+      const type = value.type?.split("/")[0];
+      console.log(value);
+      return type === "image";
+    }),
 });
 
 const ContactForm = () => {
+  const [file, setFile] = useState(null);
+  const dispatch = useDispatch();
+
   const formID = useId();
   const nameID = useId();
   const numberID = useId();
   const typeID = useId();
   const emailID = useId();
+  const fileID = useId();
+
+  const handleFileChange = e => {
+    if (e.target.files) {
+      setFile(e.target.files[0]);
+    }
+  };
+
+  const handleUpload = async (values, actions) => {
+    const formData = new FormData();
+    if (file) {
+      console.log("Uploading file...");
+
+      formData.append("photo", file);
+      console.log(formData);
+    }
+    Object.entries(values).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+    try {
+      dispatch(addContact(formData));
+    } catch (e) {
+      console.log(e);
+    }
+    actions.resetForm();
+  };
 
   return (
-    <CustomForm
-      onSubmit={addContact}
+    <Formik
       initialValues={initialContact}
       validationSchema={validationSchema}
-      type="addContact"
-      btnName="Add contact"
+      onSubmit={handleUpload}
       id={formID}>
-      <label htmlFor={nameID}>Name*</label>
-      <Field
-        className={styles.input}
-        type="text"
-        name="name"
-        placeholder="Name"
-        id={nameID}
-      />
-      <ErrorMessage className={styles.error} name="name" component="span" />
+      <Form autoComplete="off" className={styles.form}>
+        <label htmlFor={nameID}>Name*</label>
+        <Field
+          className={styles.input}
+          type="text"
+          name="name"
+          placeholder="Name"
+          id={nameID}
+        />
+        <ErrorMessage className={styles.error} name="name" component="span" />
 
-      <label htmlFor={numberID}>Phone number*</label>
-      <Field
-        className={styles.input}
-        type="text"
-        name="phoneNumber"
-        placeholder="+38-XXX-XXX-XX-XX"
-        id={numberID}
-      />
-      <label htmlFor={typeID}>Contact type*</label>
-      <Field
-        as="select"
-        className={styles.input}
-        name="contactType"
-        id={typeID}>
-        <option value="">Select a contact type</option>
-        <option value="home">home</option>
-        <option value="personal">personal</option>
-        <option value="work">work</option>
-      </Field>
-      <label htmlFor={emailID}>E-mail</label>
-      <Field
-        className={styles.input}
-        type="text"
-        name="email"
-        placeholder="example@info.com"
-        id={emailID}
-      />
-      <ErrorMessage className={styles.error} name="number" component="span" />
-    </CustomForm>
+        <label htmlFor={numberID}>Phone number*</label>
+        <Field
+          className={styles.input}
+          type="text"
+          name="phoneNumber"
+          placeholder="+38-XXX-XXX-XX-XX"
+          id={numberID}
+        />
+        <ErrorMessage
+          className={styles.error}
+          name="phoneNumber"
+          component="span"
+        />
+        <label htmlFor={typeID}>Contact type*</label>
+        <Field
+          as="select"
+          className={styles.input}
+          name="contactType"
+          id={typeID}>
+          <option value="">Select a contact type</option>
+          <option value="home">home</option>
+          <option value="personal">personal</option>
+          <option value="work">work</option>
+        </Field>
+        <ErrorMessage
+          className={styles.error}
+          name="contactType"
+          component="span"
+        />
+
+        <label htmlFor={emailID}>E-mail</label>
+        <Field
+          className={styles.input}
+          type="text"
+          name="email"
+          placeholder="example@info.com"
+          id={emailID}
+        />
+        <label htmlFor={fileID}>Contact picture</label>
+        <Field
+          className={styles.input}
+          type="file"
+          name="photo"
+          id={fileID}
+          onChange={handleFileChange}
+        />
+        <ErrorMessage className={styles.error} name="photo" component="span" />
+        <MainButton type="submit">Add contact</MainButton>
+      </Form>
+    </Formik>
   );
 };
 
