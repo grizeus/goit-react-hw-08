@@ -4,11 +4,13 @@ import {
   addContact,
   deleteContact,
   updateField,
+  addFile,
 } from "./operations";
 import { logOut } from "../auth/operations";
 
 const INITIAL_STATE = {
   items: [],
+  file: null,
   loading: false,
   paginationData: {
     hasNextPage: false,
@@ -16,7 +18,7 @@ const INITIAL_STATE = {
     page: 1,
     totalItems: 0,
     totalPages: 1,
-    perPage: 10,
+    perPage: 20,
   },
   error: null,
 };
@@ -49,15 +51,17 @@ const contactsSlice = createSlice({
         state.error = null;
         state.items.push(action.payload);
       })
+      .addCase(addFile.fulfilled, (state, action) => {
+        state.file = action;
+      })
       .addCase(addContact.rejected, handleRejected)
       .addCase(updateField.pending, handlePending)
       .addCase(updateField.fulfilled, (state, action) => {
         const updatedContact = action.payload.data;
-         const index = state.items.findIndex(
-           contact => contact._id === updatedContact._id
+        const index = state.items.findIndex(
+          contact => contact._id === updatedContact._id
         );
-        if (index !== -1)
-          state.items[index] = updatedContact;
+        if (index !== -1) state.items[index] = updatedContact;
         state.loading = false;
         state.error = null;
       })
@@ -80,7 +84,7 @@ const contactsSlice = createSlice({
           page: 1,
           totalItems: 0,
           totalPages: 1,
-          perPage: 10
+          perPage: 10,
         };
         state.error = null;
         state.loading = false;

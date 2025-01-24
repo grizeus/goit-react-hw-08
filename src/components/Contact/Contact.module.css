@@ -43,8 +43,7 @@
 
 .avatar {
   width: 128px;
-  max-height: 128px;
-  height: auto;
+  height: 128px;
   border-radius: 50%;
   background-color: rgb(100, 98, 98);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
