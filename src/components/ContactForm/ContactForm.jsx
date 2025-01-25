@@ -11,7 +11,6 @@ const initialContact = {
   name: "",
   phoneNumber: "",
   contactType: "",
-  photo: null,
 };
 
 const emailRegExp =
@@ -59,7 +58,7 @@ const ContactForm = () => {
 
   const handleUpload = async (values, actions) => {
     const formData = new FormData();
-    if (file) {
+    if (file !== null) {
       formData.append("photo", file);
     }
     Object.entries(values).forEach(([key, value]) => {
