@@ -7,20 +7,31 @@ import Loader from "../../components/Loader/Loader";
 import Error from "../../components/Error/Error";
 import ContactList from "../../components/ContactList/ContactList";
 import { fetchContacts } from "../../redux/contacts/operations";
-import { selectError, selectIsLoading, selectPaginationData } from "../../redux/contacts/selectors";
+import {
+  selectError,
+  selectIsLoading,
+  selectPaginationData,
+} from "../../redux/contacts/selectors";
 import { Toaster } from "react-hot-toast";
 import PageTitle from "../../components/PageTitle/PageTitle";
 
 import styles from "./ContactsPage.module.css";
+import { refreshUser } from "../../redux/auth/operations";
 const ContactsPage = () => {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
   const dispatch = useDispatch();
-  const { page, totalPages, perPage, sortBy, sortOrder } = useSelector(selectPaginationData);
+  const { page, totalPages, perPage, sortBy, sortOrder } =
+    useSelector(selectPaginationData);
 
   useEffect(() => {
+    if (error) {
+      if (error.includes("401")) {
+        dispatch(refreshUser());
+      }
+    }
     dispatch(fetchContacts({ page, totalPages, perPage, sortBy, sortOrder }));
-  }, [dispatch, page, totalPages, perPage, sortBy, sortOrder]);
+  }, [dispatch, page, totalPages, perPage, sortBy, sortOrder, error]);
   return (
     <section title="contacts page">
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
