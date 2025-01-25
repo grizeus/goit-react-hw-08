@@ -66,9 +66,9 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          contact => contact._id === action.payload._id
+          contact => contact._id === action.payload
         );
-        state.items.splice(index, 1);
+        if (index !== -1) state.items.splice(index, 1);
       })
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(logOut.fulfilled, state => {
