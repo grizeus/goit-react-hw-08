@@ -23,21 +23,18 @@ export const fetchContacts = createAsyncThunk(
   }
 );
 
-export const addFile = createAsyncThunk(
-  "contacts/addFile",
-  async (file, thunkAPI) => {
-    try {
-      return file;
-    } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
-    }
-  }
-);
-
 export const addContact = createAsyncThunk(
   "contacts/addContact",
   async (payload, thunkAPI) => {
     try {
+      if (payload.has("photo")) {
+        const { data: wrap } = await instanceContacts.post(
+          "/contacts",
+          payload,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        return wrap.data;
+      }
       const { data: wrap } = await instanceContacts.post("/contacts", payload);
       return wrap.data;
     } catch (e) {

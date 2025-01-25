@@ -4,13 +4,11 @@ import {
   addContact,
   deleteContact,
   updateField,
-  addFile,
 } from "./operations";
 import { logOut } from "../auth/operations";
 
 const INITIAL_STATE = {
   items: [],
-  file: null,
   loading: false,
   paginationData: {
     hasNextPage: false,
@@ -50,9 +48,6 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.items.push(action.payload);
-      })
-      .addCase(addFile.fulfilled, (state, action) => {
-        state.file = action;
       })
       .addCase(addContact.rejected, handleRejected)
       .addCase(updateField.pending, handlePending)
