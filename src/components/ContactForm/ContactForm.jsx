@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import toast from "react-hot-toast";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 
@@ -68,7 +69,9 @@ const ContactForm = () => {
     });
     try {
       dispatch(addContact(formData));
+      toast.success("Contact added");
     } catch (e) {
+      toast.error(`Contact adding error: ${e.message}`);
       console.log(e);
     }
     actions.resetForm();

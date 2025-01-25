@@ -25,11 +25,7 @@ const CustomForm = ({
     dispatch(onSubmit(values))
       .unwrap()
       .then(() => {
-        if (type === "addContact") {
-          toast.success("Contact added!");
-        } else {
-          toast.success(`Success ${type}!`);
-        }
+        toast.success(`Success ${type}!`);
       })
       .catch(() => {
         toast.error(`${capitalize(type)} error!`);
