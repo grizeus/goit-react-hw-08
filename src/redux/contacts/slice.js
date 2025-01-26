@@ -4,13 +4,11 @@ import {
   addContact,
   deleteContact,
   updateField,
-  addFile,
 } from "./operations";
 import { logOut } from "../auth/operations";
 
 const INITIAL_STATE = {
   items: [],
-  file: null,
   loading: false,
   paginationData: {
     hasNextPage: false,
@@ -18,7 +16,7 @@ const INITIAL_STATE = {
     page: 1,
     totalItems: 0,
     totalPages: 1,
-    perPage: 20,
+    perPage: 10,
   },
   error: null,
 };
@@ -35,6 +33,14 @@ const handleRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: INITIAL_STATE,
+  reducers: {
+    setPage: (state, action) => {
+      state.paginationData.page = action.payload;
+    },
+    setPerPage: (state, action) => {
+      state.perPage = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
@@ -50,9 +56,6 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         state.items.push(action.payload);
-      })
-      .addCase(addFile.fulfilled, (state, action) => {
-        state.file = action;
       })
       .addCase(addContact.rejected, handleRejected)
       .addCase(updateField.pending, handlePending)
@@ -71,9 +74,9 @@ const contactsSlice = createSlice({
         state.loading = false;
         state.error = null;
         const index = state.items.findIndex(
-          contact => contact._id === action.payload._id
+          contact => contact._id === action.payload
         );
-        state.items.splice(index, 1);
+        if (index !== -1) state.items.splice(index, 1);
       })
       .addCase(deleteContact.rejected, handleRejected)
       .addCase(logOut.fulfilled, state => {
@@ -92,4 +95,5 @@ const contactsSlice = createSlice({
   },
 });
 
+export const { setPage, setPerPage } = contactsSlice.actions;
 export default contactsSlice.reducer;

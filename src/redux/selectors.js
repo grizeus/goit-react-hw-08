@@ -4,12 +4,15 @@ import { selectNameFilter } from "./filters/selectors";
 
 export const selectFilteredContacts = createSelector(
   [selectContacts, selectNameFilter],
-  (contacts, nameFilter) => {
-    if (!nameFilter) {
+  (contacts, entityFilter) => {
+    if (!entityFilter) {
       return contacts;
     }
-    return contacts.filter(contact =>
-      contact.name.toLocaleLowerCase().includes(nameFilter) || contact.phoneNumber.includes(nameFilter)
+    return contacts.filter(
+      contact =>
+        contact.name.toLocaleLowerCase().includes(entityFilter) ||
+        contact.phoneNumber.includes(entityFilter) ||
+        contact.email?.includes(entityFilter)
     );
   }
 );

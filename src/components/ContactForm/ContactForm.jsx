@@ -1,4 +1,5 @@
 import { useId, useState } from "react";
+import toast from "react-hot-toast";
 import { Formik, Field, ErrorMessage, Form } from "formik";
 import * as Yup from "yup";
 
@@ -11,7 +12,6 @@ const initialContact = {
   name: "",
   phoneNumber: "",
   contactType: "",
-  photo: null,
 };
 
 const emailRegExp =
@@ -36,7 +36,6 @@ const validationSchema = Yup.object().shape({
     .test("isFile", "Please select an image file", value => {
       if (!value) return true;
       const type = value.type?.split("/")[0];
-      console.log(value);
       return type === "image";
     }),
 });
@@ -60,18 +59,19 @@ const ContactForm = () => {
 
   const handleUpload = async (values, actions) => {
     const formData = new FormData();
-    if (file) {
-      console.log("Uploading file...");
-
+    if (file !== null) {
       formData.append("photo", file);
-      console.log(formData);
     }
     Object.entries(values).forEach(([key, value]) => {
-      formData.append(key, value);
+      if (key !== "photo") {
+        formData.append(key, value);
+      }
     });
     try {
       dispatch(addContact(formData));
+      toast.success("Contact added");
     } catch (e) {
+      toast.error(`Contact adding error: ${e.message}`);
       console.log(e);
     }
     actions.resetForm();
