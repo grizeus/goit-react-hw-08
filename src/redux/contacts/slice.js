@@ -16,7 +16,7 @@ const INITIAL_STATE = {
     page: 1,
     totalItems: 0,
     totalPages: 1,
-    perPage: 20,
+    perPage: 10,
   },
   error: null,
 };
@@ -33,6 +33,14 @@ const handleRejected = (state, action) => {
 const contactsSlice = createSlice({
   name: "contacts",
   initialState: INITIAL_STATE,
+  reducers: {
+    setPage: (state, action) => {
+      state.paginationData.page = action.payload;
+    },
+    setPerPage: (state, action) => {
+      state.perPage = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(fetchContacts.pending, handlePending)
@@ -87,4 +95,5 @@ const contactsSlice = createSlice({
   },
 });
 
+export const { setPage, setPerPage } = contactsSlice.actions;
 export default contactsSlice.reducer;

@@ -2,6 +2,9 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, max(200px));
   gap: 5px 40px;
+  @media (min-width: 1400px) {
+    grid-template-columns: repeat(auto-fit, max(250px));
+  }
 }
 
 .notification {
