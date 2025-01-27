@@ -2,13 +2,14 @@ import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import PageTitle from "../../components/PageTitle/PageTitle";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { verify } from "../../redux/auth/operations";
+import { selectError } from "../../redux/contacts/selectors";
 
 const HomePage = () => {
   const [searchParams] = useSearchParams();
   const [isVerified, setIsVerified] = useState(false);
-  const [error, setError] = useState("");
+  const error = useSelector(selectError);
 
   const dispatch = useDispatch();
 
