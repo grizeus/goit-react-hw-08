@@ -26,6 +26,17 @@ export const register = createAsyncThunk(
   }
 );
 
+export const verify = createAsyncThunk(
+  "auth/verify",
+  async (credentials, thunkAPI) => {
+    try {
+      await instanceContacts.post("auth/register", );
+    } catch (e) {
+      return thunkAPI.rejectWithValue(e.message);
+    }
+  }
+);
+
 export const logIn = createAsyncThunk(
   "auth/login",
   async (credentials, thunkAPI) => {
