@@ -8,8 +8,16 @@ import { selectIsRefreshing } from "../../redux/auth/selectors";
 import { RestrictedRegRoute } from "../../routes/RestrictedRegisterRoute.jsx";
 import { RestrictedLogRoute } from "../../routes/RestrictedLoginRoute.jsx";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import RegistrationPage from "../../pages/RegistrationPage/RegistrationPage";
-import OAuthCallback from "../OAuthCollback/OAuthCollback.jsx";
+const ResetPassword = lazy(() =>
+  import("../../pages/ResetPassword/ResetPassword.jsx")
+);
+const RegistrationPage = lazy(() =>
+  import("../../pages/RegistrationPage/RegistrationPage")
+);
+const OAuthCallback = lazy(() => import("../OAuthCollback/OAuthCollback.jsx"));
+const SendResetMail = lazy(() =>
+  import("../../pages/SendResetMail/SendResetMail.jsx")
+);
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const ContactsPage = lazy(() =>
   import("../../pages/ContactsPage/ContactsPage")
@@ -52,6 +60,8 @@ function App() {
               />
             }
           />
+          <Route path="/send-reset-email" element={<SendResetMail />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/oauth-callback" element={<OAuthCallback />} />
           <Route
             path="/contacts"

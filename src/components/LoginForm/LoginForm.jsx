@@ -1,13 +1,14 @@
 import * as Yup from "yup";
 import { ErrorMessage, Field } from "formik";
 import { useId } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import Button from "../Button/Button";
 import { logIn, getLoginOAuth } from "../../redux/auth/operations";
+import { emailRegExp } from "../../constants/index";
 import CustomForm from "../CustomForm/CustomForm";
-import styles from "../CustomForm/CustomForm.module.css";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import styles from "./LoginForm.module.css";
 
 const initialLogin = {
   email: "",
@@ -15,7 +16,7 @@ const initialLogin = {
 };
 
 const validationSchema = Yup.object().shape({
-  email: Yup.string().email("Email must be a valid email").required("Required"),
+  email: Yup.string().matches(emailRegExp, "Email must be a valid email").required("Required"),
   password: Yup.string()
     .min(8, "Too short!")
     .max(35, "Too long!")

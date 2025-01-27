@@ -111,11 +111,10 @@ export const resetEmail = createAsyncThunk(
   "auth/resetEmail",
   async (credentials, thunkAPI) => {
     try {
-      const res = await instanceContacts.post(
+      await instanceContacts.post(
         "/auth/send-reset-email",
         credentials
       );
-      return res.data;
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
@@ -126,8 +125,11 @@ export const resetPwd = createAsyncThunk(
   "auth/resetPwd",
   async (credentials, thunkAPI) => {
     try {
-      const res = await instanceContacts.post("/auth/reset-pwd", credentials);
-      return res.data;
+      const { data: wrap } = await instanceContacts.post(
+        "/auth/reset-pwd",
+        credentials
+      );
+       setAuthHeader(wrap.data.accessToken);
     } catch (e) {
       return thunkAPI.rejectWithValue(e.message);
     }
