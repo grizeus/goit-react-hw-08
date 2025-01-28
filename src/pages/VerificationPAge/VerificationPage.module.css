@@ -1,0 +1,19 @@
+.link {
+  color: #fafafa;
+  text-decoration: none;
+  outline: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.link:visited {
+  color: #fafafa;
+}
+
+.link:hover,
+.link:focus {
+  color: #ffe0ab;
+}
+
+.link:active {
+  color: #123152;
+}

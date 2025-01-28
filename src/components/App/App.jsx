@@ -9,14 +9,17 @@ import { RestrictedRegRoute } from "../../routes/RestrictedRegisterRoute.jsx";
 import { RestrictedLogRoute } from "../../routes/RestrictedLoginRoute.jsx";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 const ResetPassword = lazy(() =>
-  import("../../pages/ResetPassword/ResetPassword.jsx")
+  import("../../pages/ResetPassword/ResetPassword")
 );
 const RegistrationPage = lazy(() =>
   import("../../pages/RegistrationPage/RegistrationPage")
 );
-const OAuthCallback = lazy(() => import("../OAuthCollback/OAuthCollback.jsx"));
+const VerificationPage = lazy(() =>
+  import("../../pages/VerificationPAge/VerificationPage")
+);
+const OAuthCallback = lazy(() => import("../OAuthCollback/OAuthCollback"));
 const SendResetMail = lazy(() =>
-  import("../../pages/SendResetMail/SendResetMail.jsx")
+  import("../../pages/SendResetMail/SendResetMail")
 );
 const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
 const ContactsPage = lazy(() =>
@@ -51,6 +54,7 @@ function App() {
               />
             }
           />
+          <Route path="/verify" element={<VerificationPage />} />
           <Route
             path="/login"
             element={
